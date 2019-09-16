@@ -1,0 +1,6 @@
+#指定全局通用配置
+spring:
+  application:
+    name: app
+  profiles:
+    active: dev
