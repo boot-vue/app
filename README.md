@@ -10,6 +10,13 @@
 5. 要配置好xxl-job相关配置
 ```
 
+## 分支
+```bash
+master: full功能
+base: 基础功能
+dev: dev
+```
+
 ## 说明
 
 ```bash
@@ -32,9 +39,11 @@ mybatis/mybatis-plus: com.bootvue.common.mapper
 
 idutil: 生成唯一ID
 
-线程池: 基于guava
+线程池: 基于guava  ThreadPoolUtil ,demo见main方法
 
-image处理: 基于openCV
+image处理
+
+excel: https://github.com/Crab2died/Excel4J
 
 任务调度: XXL-JOB
 ```
