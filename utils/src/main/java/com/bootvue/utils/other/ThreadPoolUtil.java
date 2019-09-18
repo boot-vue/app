@@ -1,7 +1,7 @@
 package com.bootvue.utils.other;
 
 import com.google.common.util.concurrent.*;
-import org.checkerframework.checker.nullness.qual.Nullable;
+import org.springframework.lang.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -7,7 +7,8 @@
 2. demo.sql跑demo用
 3. 默认url:  /login  /logout /auth/authentication /auth/authorization
 4. mybatis配置: classpath:mybatis
-5. 要配置好xxl-job相关配置
+5. 要配置好elastic-job相关配置(yml里 添加scheduler.config相关配置, 没有的话不会激活elastic-job的自动配置), 见: com.bootvue.config.scheduler.ElasticJobAutoConfiguration
+6. zookeeper最好配置, 任务配置或者其它功能会用到
 ```
 
 ## 分支
@@ -45,6 +46,14 @@ image处理
 
 excel: https://github.com/Crab2died/Excel4J
 
-任务调度: XXL-JOB
+任务调度: elsetic-job easyscheduler(重量级, 后期再加入)
+```
+
+### end
+```bash
+有一些第三方依赖好多年不维护了
+谨慎使用
+图片压缩的 thumbnailator
+任务调度的 elastic-job, 为了兼容 elastic-job, 项目里的guava降级到了20.0版本
 ```
 
