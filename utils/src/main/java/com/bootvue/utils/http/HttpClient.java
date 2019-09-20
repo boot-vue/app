@@ -24,24 +24,27 @@ import java.util.Map;
 
 public class HttpClient {
 
-    private static CloseableHttpClient httpClient;
+    private static PoolingHttpClientConnectionManager clientConnectionManager;
+    private static RequestConfig requestConfig;
 
     static {
         //pool
-        PoolingHttpClientConnectionManager clientConnectionManager = new PoolingHttpClientConnectionManager();
-        clientConnectionManager.setMaxTotal(200);
-        clientConnectionManager.setDefaultMaxPerRoute(50);
+        clientConnectionManager = new PoolingHttpClientConnectionManager();
+        clientConnectionManager.setMaxTotal(1000);
+        clientConnectionManager.setDefaultMaxPerRoute(100);
 
         //config
-        RequestConfig config = RequestConfig.custom()
+        requestConfig = RequestConfig.custom()
                 .setConnectTimeout(5000)
                 .setSocketTimeout(5000)
                 .setConnectionRequestTimeout(5000)
                 .build();
+    }
 
-        httpClient = HttpClients.custom()
+    public CloseableHttpClient getHttpClient() {
+        return HttpClients.custom()
                 .setConnectionManager(clientConnectionManager)
-                .setDefaultRequestConfig(config)
+                .setDefaultRequestConfig(requestConfig)
                 .build();
     }
 
@@ -53,7 +56,7 @@ public class HttpClient {
      * @throws URISyntaxException
      * @throws IOException
      */
-    public static CloseableHttpResponse get(String url, Map<String, String> params, Map<String, String> headers) throws URISyntaxException, IOException {
+    public CloseableHttpResponse get(String url, Map<String, String> params, Map<String, String> headers) throws URISyntaxException, IOException {
         URIBuilder uri = new URIBuilder(url);
         if (!CollectionUtils.isEmpty(params)) {
             List<NameValuePair> pairs = new ArrayList<>();
@@ -72,7 +75,7 @@ public class HttpClient {
         }
 
         //请求
-        return httpClient.execute(httpGet);
+        return getHttpClient().execute(httpGet);
     }
 
     /**
@@ -81,7 +84,7 @@ public class HttpClient {
      * @throws IOException
      * @throws URISyntaxException
      */
-    public static CloseableHttpResponse get(String url) throws IOException, URISyntaxException {
+    public CloseableHttpResponse get(String url) throws IOException, URISyntaxException {
         return get(url, null, null);
     }
 
@@ -92,7 +95,7 @@ public class HttpClient {
      * @param isJson  是否发送application/json请求
      * @return CloseableHttpResponse
      */
-    public static CloseableHttpResponse post(String url, Map<String, String> params, Map<String, String> headers, boolean isJson) throws IOException {
+    public CloseableHttpResponse post(String url, Map<String, String> params, Map<String, String> headers, boolean isJson) throws IOException {
         HttpPost httpPost = new HttpPost();
         //参数
         if (!CollectionUtils.isEmpty(params)) {
@@ -116,7 +119,7 @@ public class HttpClient {
         }
 
         //请求
-        return httpClient.execute(httpPost);
+        return getHttpClient().execute(httpPost);
     }
 
     /**
@@ -126,7 +129,7 @@ public class HttpClient {
      * @return CloseableHttpResponse
      * @throws IOException
      */
-    public static CloseableHttpResponse post(String url) throws IOException {
+    public CloseableHttpResponse post(String url) throws IOException {
         return post(url, null, null, false);
     }
 }
