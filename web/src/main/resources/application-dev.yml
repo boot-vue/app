@@ -1,16 +1,18 @@
 spring:
   datasource:
-    url: jdbc:mysql://192.168.126.81:30001/demo?characterEncoding=UTF-8&useSSL=false&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://192.168.3.10:30002/demo?characterEncoding=UTF-8&useSSL=false&allowPublicKeyRetrieval=true
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: root
   jpa:
     show-sql: false
   redis:
-    host: 192.168.126.81
-    port: 30002
+    host: 192.168.3.81
+    port: 30003
 logging:
   config: classpath:logback/logback-dev.xml
+  level:
+    com.zaxxer.hikari: debug
 #自定义参数
 app:
   allow-url: //白名单, 支持匿名访问
@@ -19,5 +21,5 @@ app:
 #elastic-job
 scheduler:
   config:
-    entrypoint: 192.168.2.10:30003
+    entrypoint: 192.168.3.10:30004
     namespace: demoScheduler

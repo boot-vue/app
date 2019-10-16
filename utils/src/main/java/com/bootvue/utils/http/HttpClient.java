@@ -30,7 +30,9 @@ public class HttpClient {
     static {
         //pool
         clientConnectionManager = new PoolingHttpClientConnectionManager();
+        // 最大1000
         clientConnectionManager.setMaxTotal(1000);
+        // 单个路由最大100
         clientConnectionManager.setDefaultMaxPerRoute(100);
 
         //config
@@ -41,7 +43,7 @@ public class HttpClient {
                 .build();
     }
 
-    public CloseableHttpClient getHttpClient() {
+    public static CloseableHttpClient getHttpClient() {
         return HttpClients.custom()
                 .setConnectionManager(clientConnectionManager)
                 .setDefaultRequestConfig(requestConfig)
@@ -56,7 +58,7 @@ public class HttpClient {
      * @throws URISyntaxException
      * @throws IOException
      */
-    public CloseableHttpResponse get(String url, Map<String, String> params, Map<String, String> headers) throws URISyntaxException, IOException {
+    public static CloseableHttpResponse get(String url, Map<String, String> params, Map<String, String> headers) throws URISyntaxException, IOException {
         URIBuilder uri = new URIBuilder(url);
         if (!CollectionUtils.isEmpty(params)) {
             List<NameValuePair> pairs = new ArrayList<>();
@@ -84,7 +86,7 @@ public class HttpClient {
      * @throws IOException
      * @throws URISyntaxException
      */
-    public CloseableHttpResponse get(String url) throws IOException, URISyntaxException {
+    public static CloseableHttpResponse get(String url) throws IOException, URISyntaxException {
         return get(url, null, null);
     }
 
@@ -95,7 +97,7 @@ public class HttpClient {
      * @param isJson  是否发送application/json请求
      * @return CloseableHttpResponse
      */
-    public CloseableHttpResponse post(String url, Map<String, String> params, Map<String, String> headers, boolean isJson) throws IOException {
+    public static CloseableHttpResponse post(String url, Map<String, String> params, Map<String, String> headers, boolean isJson) throws IOException {
         HttpPost httpPost = new HttpPost();
         //参数
         if (!CollectionUtils.isEmpty(params)) {
@@ -129,7 +131,7 @@ public class HttpClient {
      * @return CloseableHttpResponse
      * @throws IOException
      */
-    public CloseableHttpResponse post(String url) throws IOException {
+    public static CloseableHttpResponse post(String url) throws IOException {
         return post(url, null, null, false);
     }
 }

@@ -5,7 +5,7 @@ spring:
   datasource:
     hikari:
       #线程池最大数量
-      maximum-pool-size: 20
+      maximum-pool-size: 25
       #生命周期 25分钟
       max-lifetime: 150000
       #连接池名称

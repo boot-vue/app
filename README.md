@@ -14,7 +14,6 @@
 ## 分支
 ```bash
 master: full功能
-base: 基础功能
 dev: dev
 ```
 
@@ -57,3 +56,8 @@ excel: https://github.com/Crab2died/Excel4J
 任务调度的 elastic-job, 为了兼容 elastic-job, 项目里的guava降级到了20.0版本
 ```
 
+
+### 计划  2.X
+
+- [ ] 自定义zookeeper任务调度器, 剔除目前已有的第三方调度框架
+- [x] 版本管理
