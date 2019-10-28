@@ -15,7 +15,7 @@
     <property name="LOG_HOME" value="D:/logs"/>
     <property name="log.maxHistory" value="90"/>
     <property name="log.level" value="INFO"/>
-    <property name="log.size" value="5MB"/>
+    <property name="log.size" value="2GB"/>
 
     <!--输出到控制台-->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">

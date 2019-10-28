@@ -13,7 +13,8 @@ public enum ResultCode {
     SUCCESS(200, "success"),
     LOGIN_ERROR(601, "用户名或密码错误"),
     AUTHENTICATION_ERROR(602, "用户未登录"),
-    AUTHORIZATION_ERROR(603, "没有权限");
+    AUTHORIZATION_ERROR(603, "没有权限"),
+    AUTHEN_ERROR(604, "认证失败");
     private Integer code;
     private String msg;
 }

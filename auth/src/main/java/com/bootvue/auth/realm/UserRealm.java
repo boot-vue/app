@@ -1,5 +1,6 @@
 package com.bootvue.auth.realm;
 
+
 import com.bootvue.common.dao.UserDao;
 import com.bootvue.common.entity.User;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +9,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
@@ -21,6 +23,17 @@ import java.util.List;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserRealm extends AuthorizingRealm {
     private final UserDao userDao;
+
+    public static void main(String[] args) {
+        SimpleHash simpleHash = new SimpleHash("md5", "123456", ByteSource.Util.bytes("demo1"), 1024);
+        System.out.println(simpleHash.toString());
+    }
+
+    @Override
+    public boolean supports(AuthenticationToken token) {
+        //  只处理 UsernamePasswordToken登录
+        return token instanceof UsernamePasswordToken;
+    }
 
     /**
      * 用户授权

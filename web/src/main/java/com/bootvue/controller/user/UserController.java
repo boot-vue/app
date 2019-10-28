@@ -1,5 +1,6 @@
 package com.bootvue.controller.user;
 
+import com.bootvue.auth.jwt.JwtUtil;
 import com.bootvue.common.entity.User;
 import com.bootvue.common.type.AppException;
 import com.bootvue.common.type.ResultCode;
@@ -11,6 +12,10 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 用户认证  授权
@@ -30,13 +35,19 @@ public class UserController {
     public String login(User user) {
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(user.getUsername(), user.getPassword());
+        String jwtToken = "";
         try {
             subject.login(usernamePasswordToken);
+
+            //生成jwt token
+            Map<String, Object> params = new HashMap<>();
+            params.put("username", user.getUsername());
+
+            jwtToken = JwtUtil.encode(Duration.ofDays(30L).toMillis(), params);
         } catch (AuthenticationException e) {//  需要 细分异常类型  可以catch AuthenticationException子类异常
             throw new AppException(ResultCode.LOGIN_ERROR);
         }
-        //session id  即 token
-        return String.valueOf(subject.getSession().getId());
+        return jwtToken;
     }
 
     /**

@@ -1,4 +1,3 @@
-> 不适合分布式架构应用
 
 ## 配置修改
 
@@ -13,14 +12,13 @@
 
 ## 分支
 ```bash
-master: full功能
-dev: dev
+master: 基础功能
 ```
 
 ## 说明
 
 ```bash
-utils : util模块
+util : util模块
 common : entity, dao, config....
 auth : shiro认证与授权
 service : 所有的应用服务
@@ -59,5 +57,3 @@ excel: https://github.com/Crab2died/Excel4J
 
 ### 计划  2.X
 
-- [ ] 自定义zookeeper任务调度器, 剔除目前已有的第三方调度框架
-- [x] 版本管理
