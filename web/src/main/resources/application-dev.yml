@@ -11,11 +11,10 @@ spring:
     port: 6379
 logging:
   config: classpath:logback/logback-dev.xml
-  level:
-    com.zaxxer.hikari: debug
 #自定义参数
 app:
-  allow-url: //白名单, 支持匿名访问
+  whitelist: # 白名单, 支持匿名访问
+    - /oo
 
 #elastic-job
 #scheduler:

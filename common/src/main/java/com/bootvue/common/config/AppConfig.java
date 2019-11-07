@@ -14,5 +14,5 @@ import java.util.List;
 public class AppConfig {
 
     //允许 匿名访问
-    private List<String> allowUrl;
+    private List<String> whitelist;
 }

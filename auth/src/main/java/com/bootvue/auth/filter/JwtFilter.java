@@ -13,7 +13,6 @@ import org.springframework.util.StringUtils;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
@@ -24,7 +23,7 @@ public class JwtFilter extends AccessControlFilter {
      * 2. 返回false，shiro才会根据onAccessDenied的方法的返回值决定是否允许访问url
      * */
     @Override
-    protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) throws Exception {
+    protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
         String token = getToken(request);
 
         //验证token是否合法  合法--> 刷新token有效时间 _->true
@@ -71,6 +70,6 @@ public class JwtFilter extends AccessControlFilter {
 
     // 获取token
     private String getToken(ServletRequest request) {
-        return ((HttpServletRequest) request).getHeader("token");
+        return WebUtils.toHttp(request).getHeader("token");
     }
 }

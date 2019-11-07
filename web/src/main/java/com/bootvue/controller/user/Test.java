@@ -12,4 +12,19 @@ public class Test {
     public String test() {
         return "test";
     }
+
+    @GetMapping("/admin/xxx")
+    public String xxx() {
+        return "xxx";
+    }
+
+    @GetMapping("/user/ooo")
+    public String ooo() {
+        return "ooo";
+    }
+
+    @GetMapping("/oo")
+    public String oo() {
+        return "oo";
+    }
 }

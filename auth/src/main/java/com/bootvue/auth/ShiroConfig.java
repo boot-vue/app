@@ -1,7 +1,7 @@
 package com.bootvue.auth;
 
 import com.bootvue.auth.filter.JwtFilter;
-import com.bootvue.auth.jwt.JwtDefaultSubjectFactory;
+import com.bootvue.auth.jwt.JwtSubjectFactory;
 import com.bootvue.auth.realm.UserRealm;
 import com.bootvue.common.config.AppConfig;
 import com.bootvue.common.dao.UserDao;
@@ -37,7 +37,7 @@ public class ShiroConfig {
     // jwt subjectFactory  关闭session
     @Bean
     public SubjectFactory subjectFactory() {
-        return new JwtDefaultSubjectFactory();
+        return new JwtSubjectFactory();
     }
 
     // 加密方式
@@ -55,6 +55,7 @@ public class ShiroConfig {
     @Bean
     public Realm realm(HashedCredentialsMatcher matcher) {
         UserRealm userRealm = new UserRealm(userDao);
+        userRealm.setCachingEnabled(false);
         userRealm.setCredentialsMatcher(matcher);
         return userRealm;
     }
@@ -84,15 +85,16 @@ public class ShiroConfig {
         Map<String, String> filterMap = new LinkedHashMap<>();
         filterMap.put("/login", "anon");
         //添加白名单
-        List<String> allowUrl = appConfig.getAllowUrl();
-        if (!CollectionUtils.isEmpty(allowUrl)) {
-            for (String url : allowUrl) {
+        List<String> whiteList = appConfig.getWhitelist();
+        if (!CollectionUtils.isEmpty(whiteList)) {
+            for (String url : whiteList) {
                 filterMap.put(url, "anon");
             }
         }
 
-        filterMap.put("/**", "jwt");  //所有请求经过jwt filter
+
         filterMap.put("/logout", "logout");
+        filterMap.put("/**", "jwt");  //所有请求经过jwt filter
 
         filter.setFilterChainDefinitionMap(filterMap);
         return filter;

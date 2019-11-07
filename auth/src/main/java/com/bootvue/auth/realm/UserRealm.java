@@ -1,6 +1,7 @@
 package com.bootvue.auth.realm;
 
 
+import com.bootvue.auth.jwt.JwtToken;
 import com.bootvue.common.dao.UserDao;
 import com.bootvue.common.entity.User;
 import lombok.RequiredArgsConstructor;
@@ -31,8 +32,7 @@ public class UserRealm extends AuthorizingRealm {
 
     @Override
     public boolean supports(AuthenticationToken token) {
-        //  只处理 UsernamePasswordToken登录
-        return token instanceof UsernamePasswordToken;
+        return token instanceof JwtToken;
     }
 
     /**
