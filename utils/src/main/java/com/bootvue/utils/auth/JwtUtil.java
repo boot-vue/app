@@ -1,4 +1,4 @@
-package com.bootvue.auth.jwt;
+package com.bootvue.utils.auth;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;

@@ -14,12 +14,7 @@
     <dependencies>
         <dependency>
             <groupId>com.bootvue</groupId>
-            <artifactId>common</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.bootvue</groupId>
-            <artifactId>utils</artifactId>
+            <artifactId>auth</artifactId>
         </dependency>
     </dependencies>
 

@@ -1,4 +1,4 @@
-package com.bootvue.common.type;
+package com.bootvue.common.result;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;

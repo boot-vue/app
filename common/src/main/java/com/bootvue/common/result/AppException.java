@@ -1,4 +1,4 @@
-package com.bootvue.common.type;
+package com.bootvue.common.result;
 
 import lombok.Getter;
 import lombok.Setter;

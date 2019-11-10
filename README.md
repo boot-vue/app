@@ -20,7 +20,7 @@ master: 基础功能
 ```bash
 util : util模块
 common : entity, dao, config....
-auth : shiro认证与授权
+auth : 认证与授权
 service : 所有的应用服务
 web: 打包入口, 所有的api接口 
 ```
@@ -28,7 +28,6 @@ web: 打包入口, 所有的api接口
 ## 其它
 
 ```bash
-shiro: 自定义了session manager与cache manager, 依赖redis
 redis: 重写了序列化规则
 
 http:  okhttp-->resttemplate or httpclient

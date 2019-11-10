@@ -1,4 +1,4 @@
-package com.bootvue.common.type;
+package com.bootvue.common.result;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,9 +12,7 @@ public enum ResultCode {
     DEFAULT(600, "系统异常"),
     SUCCESS(200, "success"),
     LOGIN_ERROR(601, "用户名或密码错误"),
-    AUTHENTICATION_ERROR(602, "用户未登录"),
-    AUTHORIZATION_ERROR(603, "没有权限"),
-    AUTHEN_ERROR(604, "认证失败");
+    AUTHEN_ERROR(602, "认证未通过");
     private Integer code;
     private String msg;
 }

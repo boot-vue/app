@@ -16,10 +16,6 @@
             <artifactId>service</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>com.bootvue</groupId>
-            <artifactId>auth</artifactId>
-        </dependency>
     </dependencies>
 
     <build>
