@@ -26,6 +26,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final Md5PasswordEncoder md5PasswordEncoder;
     private final AppUserDetailService appUserDetailService;
+    private final SuccessHandler successHandler;
+    private final FailHandler failHandler;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -54,16 +56,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected AppUsernamePasswordAuthenticationFilter appUsernamePasswordAuthenticationFilter() throws Exception {
         AppUsernamePasswordAuthenticationFilter filter = new AppUsernamePasswordAuthenticationFilter();
         filter.setAuthenticationManager(authenticationManagerBean());
-        filter.setAuthenticationSuccessHandler(new SuccessHandler());
-        filter.setAuthenticationFailureHandler(new FailHandler());
+        filter.setAuthenticationSuccessHandler(successHandler);
+        filter.setAuthenticationFailureHandler(failHandler);
         return filter;
     }
 
     protected AppSmsAuthenticationFilter appSmsAuthenticationFilter() throws Exception {
         AppSmsAuthenticationFilter filter = new AppSmsAuthenticationFilter();
         filter.setAuthenticationManager(authenticationManagerBean());
-        filter.setAuthenticationSuccessHandler(new SuccessHandler());
-        filter.setAuthenticationFailureHandler(new FailHandler());
+        filter.setAuthenticationSuccessHandler(successHandler);
+        filter.setAuthenticationFailureHandler(failHandler);
         return filter;
     }
 

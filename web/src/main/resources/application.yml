@@ -12,3 +12,5 @@ spring:
       pool-name: app-db-pool
   profiles:
     active: dev
+server:
+  port: 8080
