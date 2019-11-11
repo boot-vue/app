@@ -2,6 +2,7 @@ package com.bootvue.auth.filter;
 
 import com.bootvue.auth.authc.AppSms;
 import com.bootvue.auth.authc.AppSmsToken;
+import com.bootvue.auth.util.AuthcConst;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.Authentication;
@@ -16,12 +17,12 @@ import javax.servlet.http.HttpServletResponse;
  * 短信登录
  */
 public class AppSmsAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
-    public static final String SPRING_SECURITY_FORM_PHONE_KEY = "phone";
-    public static final String SPRING_SECURITY_FORM_CODE_KEY = "code";
+    public static final String SPRING_SECURITY_FORM_PHONE_KEY = AuthcConst.PHONE_KEY;
+    public static final String SPRING_SECURITY_FORM_CODE_KEY = AuthcConst.PHONE_CODE;
     private boolean postOnly = true;
 
     public AppSmsAuthenticationFilter() {
-        super(new AntPathRequestMatcher("/login/sms", HttpMethod.POST.toString()));
+        super(new AntPathRequestMatcher(AuthcConst.SMS_LOGIN_URL, HttpMethod.POST.toString()));
     }
 
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {

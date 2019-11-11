@@ -1,6 +1,6 @@
 package com.bootvue.auth.filter;
 
-import com.bootvue.auth.util.JsonUtil;
+import com.bootvue.auth.util.ResponseUtil;
 import com.bootvue.common.result.ResultCode;
 import com.bootvue.common.result.ResultUtil;
 import com.bootvue.utils.auth.JwtUtil;
@@ -33,13 +33,13 @@ public class AppAuthenticationFilter extends BasicAuthenticationFilter {
         // 校验token有效性
         String token = request.getHeader("token");
         if (StringUtils.isEmpty(token)) {
-            JsonUtil.write(response, ResultUtil.error(ResultCode.AUTHEN_ERROR));
+            ResponseUtil.write(response, ResultUtil.error(ResultCode.AUTHEN_ERROR));
             return;
         }
 
         if (!JwtUtil.isVerify(token)) {
             // token无效
-            JsonUtil.write(response, ResultUtil.error(ResultCode.TOKEN_ERROR));
+            ResponseUtil.write(response, ResultUtil.error(ResultCode.TOKEN_ERROR));
             return;
         }
 

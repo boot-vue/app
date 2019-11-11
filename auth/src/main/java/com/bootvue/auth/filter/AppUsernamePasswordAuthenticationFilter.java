@@ -2,6 +2,7 @@ package com.bootvue.auth.filter;
 
 import com.bootvue.auth.authc.AppUserDetails;
 import com.bootvue.auth.authc.AppUserToken;
+import com.bootvue.auth.util.AuthcConst;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -16,8 +17,8 @@ import javax.servlet.http.HttpServletResponse;
  * AuthenticationFilter
  */
 public class AppUsernamePasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
-    public static final String SPRING_SECURITY_FORM_USERNAME_KEY = "username";
-    public static final String SPRING_SECURITY_FORM_PASSWORD_KEY = "password";
+    public static final String SPRING_SECURITY_FORM_USERNAME_KEY = AuthcConst.USERNAME_KEY;
+    public static final String SPRING_SECURITY_FORM_PASSWORD_KEY = AuthcConst.PASSWORD_KEY;
     private boolean postOnly = true;
 
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {

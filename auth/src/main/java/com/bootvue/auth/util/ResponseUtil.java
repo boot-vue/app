@@ -11,7 +11,7 @@ import java.io.IOException;
 /**
  * response 响应
  */
-public class JsonUtil {
+public class ResponseUtil {
 
     public static void write(HttpServletResponse response, Result data) throws IOException {
         response.setContentType(ContentType.APPLICATION_JSON.getMimeType());
