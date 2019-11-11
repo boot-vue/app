@@ -4,10 +4,11 @@
 ```bash
 1. classpath: 指定yml配置环境, 修改logback.xml日志路径
 2. demo.sql跑demo用
-3. 默认url:  /login  /logout /auth/authentication /auth/authorization
+3. 默认url:  /login  /login/sms  /logout 
 4. mybatis配置: classpath:mybatis
 5. 要配置好elastic-job相关配置(yml里 添加scheduler.config相关配置, 没有的话不会激活elastic-job的自动配置), 见: com.bootvue.config.scheduler.ElasticJobAutoConfiguration
 6. zookeeper最好配置, 任务配置或者其它功能会用到
+7. com.bootvue.utils.auth.JwtUtil: 修改key等配置 
 ```
 
 ## 分支

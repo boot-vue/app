@@ -26,7 +26,6 @@ public class AppUserDetailService implements UserDetailsService {
         if (ObjectUtils.isEmpty(user)) {
             throw new UsernameNotFoundException("用户不存在");
         }
-        return new org.springframework.security.core.userdetails.User(username, user.getPassword(), true, true, true, true,
-                AuthorityUtils.commaSeparatedStringToAuthorityList(user.getRoles()));
+        return new AppUserDetails(username, user.getPassword(), AuthorityUtils.commaSeparatedStringToAuthorityList(user.getRoles()));
     }
 }

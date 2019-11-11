@@ -1,11 +1,12 @@
 package com.bootvue.auth.filter;
 
-import com.bootvue.auth.authc.AppUser;
+import com.bootvue.auth.authc.AppUserDetails;
 import com.bootvue.auth.authc.AppUserToken;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +18,6 @@ import javax.servlet.http.HttpServletResponse;
 public class AppUsernamePasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     public static final String SPRING_SECURITY_FORM_USERNAME_KEY = "username";
     public static final String SPRING_SECURITY_FORM_PASSWORD_KEY = "password";
-    public static final String STRING_SECURITY_USER_TYPE = "type";
     private boolean postOnly = true;
 
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
@@ -36,9 +36,8 @@ public class AppUsernamePasswordAuthenticationFilter extends UsernamePasswordAut
 
             username = username.trim();
 
-            String type = obtainUserType(request);
-
-            AppUserToken authRequest = new AppUserToken(new AppUser(username, password, type));
+            AppUserDetails userDetails = new AppUserDetails(username, password, AuthorityUtils.NO_AUTHORITIES);
+            AppUserToken authRequest = new AppUserToken(userDetails);
             this.setDetails(request, authRequest);
             return this.getAuthenticationManager().authenticate(authRequest);
         }
@@ -52,10 +51,6 @@ public class AppUsernamePasswordAuthenticationFilter extends UsernamePasswordAut
     @Override
     protected String obtainUsername(HttpServletRequest request) {
         return super.obtainUsername(request);
-    }
-
-    String obtainUserType(HttpServletRequest request) {
-        return request.getParameter(STRING_SECURITY_USER_TYPE);
     }
 
     @Override

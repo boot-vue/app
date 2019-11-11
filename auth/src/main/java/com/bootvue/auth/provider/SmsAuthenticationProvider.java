@@ -1,10 +1,12 @@
 package com.bootvue.auth.provider;
 
-import com.bootvue.auth.authc.AppSms;
 import com.bootvue.auth.authc.AppSmsToken;
+import com.bootvue.auth.authc.AppUserDetails;
+import com.bootvue.auth.authc.AppUserToken;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.authority.AuthorityUtils;
 
 /**
  * 短信 认证
@@ -26,10 +28,9 @@ public class SmsAuthenticationProvider implements AuthenticationProvider {
             throw new InternalAuthenticationServiceException("无法获取用户信息");
         }
 */
-        AppSmsToken authenticationResult = new AppSmsToken(new AppSms(phone, code));
-
-        authenticationResult.setDetails(smsToken.getDetails());
-
+        AppUserDetails userDetails = new AppUserDetails("demo", "2222", AuthorityUtils.commaSeparatedStringToAuthorityList("admin,user"));
+        AppUserToken authenticationResult = new AppUserToken(userDetails);
+        authenticationResult.setDetails(userDetails);
         return authenticationResult;
     }
 

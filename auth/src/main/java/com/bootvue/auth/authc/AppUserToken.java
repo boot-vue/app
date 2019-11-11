@@ -1,13 +1,17 @@
 package com.bootvue.auth.authc;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+
+import java.util.Collection;
 
 public class AppUserToken extends UsernamePasswordAuthenticationToken {
-    private String userType = "";
-
-
-    public AppUserToken(AppUser appUser) {
+    public AppUserToken(AppUserDetails appUser) {
         super(appUser.getUsername(), appUser.getPassword());
-        this.userType = appUser.getType();
+    }
+
+    public AppUserToken(AppUserDetails appUser, Collection<? extends GrantedAuthority> authorities) {
+        super(appUser.getUsername(), appUser.getPassword(), authorities);
+        super.setAuthenticated(true);
     }
 }
