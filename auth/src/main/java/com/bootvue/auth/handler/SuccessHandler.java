@@ -1,5 +1,6 @@
-package com.bootvue.auth.authc;
+package com.bootvue.auth.handler;
 
+import com.bootvue.auth.authc.AppUserDetails;
 import com.bootvue.auth.util.AuthcConst;
 import com.bootvue.auth.util.ResponseUtil;
 import com.bootvue.common.result.ResultUtil;

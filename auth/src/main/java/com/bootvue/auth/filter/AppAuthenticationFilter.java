@@ -1,5 +1,6 @@
 package com.bootvue.auth.filter;
 
+import com.bootvue.auth.model.JwtToken;
 import com.bootvue.auth.util.ResponseUtil;
 import com.bootvue.common.result.ResultCode;
 import com.bootvue.common.result.ResultUtil;
@@ -7,6 +8,8 @@ import com.bootvue.utils.auth.JwtUtil;
 import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.util.StringUtils;
 
@@ -32,13 +35,7 @@ public class AppAuthenticationFilter extends BasicAuthenticationFilter {
 
         // 校验token有效性
         String token = request.getHeader("token");
-        if (StringUtils.isEmpty(token)) {
-            ResponseUtil.write(response, ResultUtil.error(ResultCode.AUTHEN_ERROR));
-            return;
-        }
-
-        if (!JwtUtil.isVerify(token)) {
-            // token无效
+        if (StringUtils.isEmpty(token) || !JwtUtil.isVerify(token)) {
             ResponseUtil.write(response, ResultUtil.error(ResultCode.TOKEN_ERROR));
             return;
         }
@@ -46,9 +43,11 @@ public class AppAuthenticationFilter extends BasicAuthenticationFilter {
         // *************token验证通过
 
         Claims params = JwtUtil.decode(token);
-        log.info("用户信息: {}", params);
-        // 这里可以添加权限校验
+        log.debug("用户信息: {}", params);
 
+        JwtToken authToken = new JwtToken(params);
+        Authentication authResult = this.getAuthenticationManager().authenticate(authToken);
+        SecurityContextHolder.getContext().setAuthentication(authResult);
 
         //放行  --> 下面各自认证provider处理认证
         chain.doFilter(request, response);

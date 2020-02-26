@@ -1,19 +1,19 @@
 spring:
   datasource:
-    url: jdbc:mysql://192.168.21.81:3306/demo?characterEncoding=UTF-8&useSSL=false&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://192.168.46.30:3306/demo?characterEncoding=UTF-8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: root
   jpa:
     show-sql: false
   redis:
-    host: 192.168.21.81
+    host: 192.168.46.30
     port: 6379
 logging:
   config: classpath:logback/logback-dev.xml
 #自定义参数
 app:
-  whitelist: # 白名单, 支持匿名访问
+  white-list: # 白名单, 支持匿名访问
     - /oo
 
 #elastic-job

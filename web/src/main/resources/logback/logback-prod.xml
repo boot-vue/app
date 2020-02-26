@@ -25,11 +25,9 @@
         </encoder>
     </appender>
 
-    <!--info 级别的日志-->
-    <!-- 按照每天生成日志文件 -->
     <appender name="INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-            <level>INFO</level>
+            <level>${log.level}</level>
         </filter>
         <!-- 文件路径 -->
         <file>${LOG_HOME}/info.log</file><!-- 当前的日志文件存放路径 -->
@@ -47,51 +45,8 @@
         </encoder>
     </appender>
 
-    <!--WARN 级别的日志-->
-    <appender name="WARN" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <!-- 文件路径 -->
-        <file>${LOG_HOME}/warn.log</file><!-- 当前的日志文件存放路径 -->
-        <!-- 日志滚动策略 -->
-        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <!-- 历史日志文件的存放路径和名称 -->
-            <fileNamePattern>${LOG_HOME}/warn/warn.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
-            <!--日志文件最大的大小-->
-            <maxFileSize>${log.size}</maxFileSize>
-            <!-- 日志文件最大的保存历史 数量-->
-            <maxHistory>${log.maxHistory}</maxHistory>
-        </rollingPolicy>
-        <encoder>
-            <pattern>${FILE_LOG_PATTERN}</pattern>  <!-- 日志文件中日志的格式 -->
-        </encoder>
-        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-            <level>WARN</level>
-        </filter>
-    </appender>
-
-    <!--ERROR 级别的日志-->
-    <appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-            <level>ERROR</level>
-        </filter>
-        <file>${LOG_HOME}/error.log</file><!-- 当前的日志文件存放路径 -->
-        <!-- 日志滚动策略 -->
-        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <!-- 历史日志文件的存放路径和名称 -->
-            <fileNamePattern>${LOG_HOME}/error/error.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
-            <!--日志文件最大的大小-->
-            <maxFileSize>${log.size}</maxFileSize>
-            <!-- 日志文件最大的保存历史 数量-->
-            <maxHistory>${log.maxHistory}</maxHistory>
-        </rollingPolicy>
-        <encoder>
-            <pattern>${FILE_LOG_PATTERN}</pattern>  <!-- 日志文件中日志的格式 -->
-        </encoder>
-    </appender>
-
     <root level="${log.level}">
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="INFO"/>
-        <appender-ref ref="WARN"/>
-        <appender-ref ref="ERROR"/>
     </root>
 </configuration>

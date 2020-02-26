@@ -1,4 +1,4 @@
-package com.bootvue.auth.authc;
+package com.bootvue.auth.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

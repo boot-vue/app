@@ -1,7 +1,7 @@
 package com.bootvue.auth.filter;
 
-import com.bootvue.auth.authc.AppSms;
-import com.bootvue.auth.authc.AppSmsToken;
+import com.bootvue.auth.model.AppSms;
+import com.bootvue.auth.model.AppSmsToken;
 import com.bootvue.auth.util.AuthcConst;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationServiceException;
@@ -25,6 +25,7 @@ public class AppSmsAuthenticationFilter extends AbstractAuthenticationProcessing
         super(new AntPathRequestMatcher(AuthcConst.SMS_LOGIN_URL, HttpMethod.POST.toString()));
     }
 
+    @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         if (this.postOnly && !request.getMethod().equals("POST")) {
             throw new AuthenticationServiceException("Authentication method not supported: " + request.getMethod());

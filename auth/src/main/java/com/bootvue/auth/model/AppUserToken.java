@@ -1,5 +1,6 @@
-package com.bootvue.auth.authc;
+package com.bootvue.auth.model;
 
+import com.bootvue.auth.authc.AppUserDetails;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 

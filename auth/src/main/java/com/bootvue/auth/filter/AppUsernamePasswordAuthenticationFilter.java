@@ -1,7 +1,7 @@
 package com.bootvue.auth.filter;
 
 import com.bootvue.auth.authc.AppUserDetails;
-import com.bootvue.auth.authc.AppUserToken;
+import com.bootvue.auth.model.AppUserToken;
 import com.bootvue.auth.util.AuthcConst;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,6 +21,7 @@ public class AppUsernamePasswordAuthenticationFilter extends UsernamePasswordAut
     public static final String SPRING_SECURITY_FORM_PASSWORD_KEY = AuthcConst.PASSWORD_KEY;
     private boolean postOnly = true;
 
+    @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         if (this.postOnly && !request.getMethod().equals("POST")) {
             throw new AuthenticationServiceException("Authentication method not supported: " + request.getMethod());

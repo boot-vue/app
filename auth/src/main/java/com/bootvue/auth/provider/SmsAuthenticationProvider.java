@@ -1,8 +1,8 @@
 package com.bootvue.auth.provider;
 
-import com.bootvue.auth.authc.AppSmsToken;
 import com.bootvue.auth.authc.AppUserDetails;
-import com.bootvue.auth.authc.AppUserToken;
+import com.bootvue.auth.model.AppSmsToken;
+import com.bootvue.auth.model.AppUserToken;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;

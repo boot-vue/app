@@ -1,27 +1,27 @@
-package com.bootvue.auth.authc;
+package com.bootvue.auth.model;
 
+import io.jsonwebtoken.Claims;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.SpringSecurityCoreVersion;
 
 import java.util.Collection;
 
-public class AppSmsToken extends AbstractAuthenticationToken {
+public class JwtToken extends AbstractAuthenticationToken {
 
     private static final long serialVersionUID = SpringSecurityCoreVersion.SERIAL_VERSION_UID;
 
-    private Object credentials;
+    private Object credentials;   // 用户名
     private Object principal;
 
-    public AppSmsToken(AppSms sms) {
+    public JwtToken(Claims params) {
         super(null);
-        this.credentials = sms.getPhone();
-        this.principal = sms.getCode();
+        this.credentials = String.valueOf(params.get("username"));
+        this.principal = params;
         setAuthenticated(false);
     }
 
-    public AppSmsToken(Object credentials, Object principal,
-                       Collection<? extends GrantedAuthority> authorities) {
+    public JwtToken(Object credentials, Object principal, Collection<? extends GrantedAuthority> authorities) {
         super(authorities);
         this.credentials = credentials;
         this.principal = principal;
@@ -29,6 +29,7 @@ public class AppSmsToken extends AbstractAuthenticationToken {
     }
 
 
+    @Override
     public Object getCredentials() {
         return this.credentials;
     }
@@ -38,6 +39,7 @@ public class AppSmsToken extends AbstractAuthenticationToken {
         return this.principal;
     }
 
+    @Override
     public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
         if (isAuthenticated) {
             throw new IllegalArgumentException(
