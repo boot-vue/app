@@ -9,6 +9,8 @@ spring:
   redis:
     host: 192.168.46.30
     port: 6379
+  activiti:
+    db-history-used: true
 logging:
   config: classpath:logback/logback-dev.xml
 #自定义参数
