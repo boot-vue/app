@@ -12,7 +12,5 @@ import java.util.List;
 @Getter
 @Setter
 public class AppConfig {
-
-    //允许 匿名访问
-    private List<String> whiteList;
+    private List<String> testParam;
 }
