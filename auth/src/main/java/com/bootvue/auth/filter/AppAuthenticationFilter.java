@@ -31,9 +31,7 @@ public class AppAuthenticationFilter extends BasicAuthenticationFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
 
-        // 无需身份认证的url直接放行
-
-        // 校验token有效性
+        // 校验token
         String token = request.getHeader("token");
         if (StringUtils.isEmpty(token) || !JwtUtil.isVerify(token)) {
             ResponseUtil.write(response, ResultUtil.error(ResultCode.TOKEN_ERROR));
@@ -41,7 +39,6 @@ public class AppAuthenticationFilter extends BasicAuthenticationFilter {
         }
 
         // *************token验证通过
-
         Claims params = JwtUtil.decode(token);
         log.debug("用户信息: {}", params);
 
@@ -49,7 +46,7 @@ public class AppAuthenticationFilter extends BasicAuthenticationFilter {
         Authentication authResult = this.getAuthenticationManager().authenticate(authToken);
         SecurityContextHolder.getContext().setAuthentication(authResult);
 
-        //放行  --> 下面各自认证provider处理认证
+        //放行  --> provider处理认证
         chain.doFilter(request, response);
     }
 }

@@ -20,7 +20,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-
+        //处理jwt token认证
         JwtToken jwtToken = (JwtToken) authentication;
 
         String username = String.valueOf(jwtToken.getCredentials());

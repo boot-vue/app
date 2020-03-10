@@ -9,14 +9,11 @@ spring:
   redis:
     host: 192.168.46.30
     port: 6379
-  activiti:
-    db-history-used: true
 logging:
   config: classpath:logback/logback-dev.xml
 #自定义参数
 app:
-  white-list: # 白名单, 支持匿名访问
-    - /oo
+  test-param: test
 
 #elastic-job
 #scheduler:
