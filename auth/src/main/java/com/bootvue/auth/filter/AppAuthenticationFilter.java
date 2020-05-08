@@ -31,6 +31,10 @@ public class AppAuthenticationFilter extends BasicAuthenticationFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
 
+        if ("/test/list".equalsIgnoreCase(request.getRequestURI()) || "/refresh_token".equalsIgnoreCase(request.getRequestURI())) {
+            chain.doFilter(request, response);
+            return;
+        }
         // 校验token
         String token = request.getHeader("token");
         if (StringUtils.isEmpty(token) || !JwtUtil.isVerify(token)) {
@@ -44,6 +48,7 @@ public class AppAuthenticationFilter extends BasicAuthenticationFilter {
 
         JwtToken authToken = new JwtToken(params);
         Authentication authResult = this.getAuthenticationManager().authenticate(authToken);
+        // context上下文注入 已认证的 对象信息
         SecurityContextHolder.getContext().setAuthentication(authResult);
 
         //放行  --> provider处理认证

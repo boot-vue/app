@@ -8,8 +8,14 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class DemoController {
 
-    @GetMapping("/admin/test")
+    @GetMapping("/admin/list")
     public String test() {
+
+        return "admin";
+    }
+
+    @GetMapping("/test/list")
+    public String test2() {
 
         return "test";
     }

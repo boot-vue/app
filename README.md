@@ -29,7 +29,7 @@ web: 打包入口, 所有的api接口
 ## 其它
 
 ```bash
-redis: 重写了序列化规则
+redis: 重写了序列化规则 !注意与redisson默认序列号规则不一致
 
 http:  okhttp-->resttemplate or httpclient
 

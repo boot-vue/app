@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
  */
 public class JwtAuthenticationProvider implements AuthenticationProvider {
 
-    private AppUserDetailService userDetailService;
+    private final AppUserDetailService userDetailService;
 
     public JwtAuthenticationProvider(AppUserDetailService userDetailService) {
         this.userDetailService = userDetailService;
@@ -22,9 +22,9 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         //处理jwt token认证
         JwtToken jwtToken = (JwtToken) authentication;
-
         String username = String.valueOf(jwtToken.getCredentials());
 
+        // redis缓存先查询user是否存在
         UserDetails userDetails = userDetailService.loadUserByUsername(username);
         return new JwtToken(userDetails.getUsername(), jwtToken.getPrincipal(), userDetails.getAuthorities());
     }

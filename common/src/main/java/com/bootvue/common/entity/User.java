@@ -22,6 +22,9 @@ public class User implements Serializable {
     private Long id;
     private String username;
     private String password;
+    // 必须以ROLE_开头  , 分隔
     private String roles;
+
     private Date createTime;
+    private Date updateTime;
 }

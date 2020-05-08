@@ -20,7 +20,7 @@ import java.util.UUID;
 public class JwtUtil {
 
     // 生成签名是所使用的秘钥
-    private static final String base64EncodedSecretKey = "2!$@f&77XEGWSmC4";
+    private static final String base64EncodedSecretKey = "2!$tf&77XEGWSmC4";
 
     // 签发人
     private static final String iss = "app";
