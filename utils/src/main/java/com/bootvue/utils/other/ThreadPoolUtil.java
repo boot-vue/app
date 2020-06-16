@@ -11,11 +11,12 @@ public class ThreadPoolUtil<T> {
 
     private static final ThreadPoolExecutor EXECUTOR;
     private static final ListeningExecutorService EXECUTORSERVICE;
+    private static final ThreadFactory THREADFACTORY = new ThreadFactoryBuilder().setNameFormat("thread-pool-%d").build();
 
     //初始化线程池
     static {
         EXECUTOR = new ThreadPoolExecutor(10, 30,
-                5, TimeUnit.SECONDS, new LinkedBlockingQueue<>(100), Executors.defaultThreadFactory(),
+                5, TimeUnit.SECONDS, new LinkedBlockingQueue<>(100), THREADFACTORY,
                 new ThreadPoolExecutor.DiscardPolicy());
         EXECUTOR.allowCoreThreadTimeOut(true);
         EXECUTORSERVICE = MoreExecutors.listeningDecorator(EXECUTOR);
@@ -40,6 +41,7 @@ public class ThreadPoolUtil<T> {
             ListenableFuture<Long> future = ThreadPoolUtil.submit(new Callable<Long>() {
                 @Override
                 public Long call() throws Exception {
+                    System.out.println("正在处理..." + Thread.currentThread().getName());
                     Thread.sleep(3000L);
                     return Thread.currentThread().getId();
                 }
