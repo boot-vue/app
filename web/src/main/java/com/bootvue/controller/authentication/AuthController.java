@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class TokenController {
+public class AuthController {
     private final RedisTemplate<String, String> redisTemplate;
 
     @RequestMapping("/refresh_token")
