@@ -10,17 +10,19 @@ import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.schema.ModelRef;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import static com.google.common.collect.Lists.newArrayList;
 
 @Configuration
+@EnableSwagger2
 public class SwaggerConfig {
 
     @Bean
     public Docket docket() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.any())
+                .apis(RequestHandlerSelectors.basePackage("com.bootvue"))
                 .paths(PathSelectors.any())
                 .build()
                 .pathMapping("/")
@@ -30,13 +32,16 @@ public class SwaggerConfig {
                 .globalOperationParameters(
                         newArrayList(new ParameterBuilder()
                                 .name("token")
-                                .description("token")
+                                .description("token信息")
                                 .modelRef(new ModelRef("string"))
                                 .parameterType("header")
-                                .required(true)
+                                .required(true).defaultValue("")
                                 .build()))
-                .apiInfo(new ApiInfoBuilder().title("App接口文档").version("1.0").build())
+                .apiInfo(new ApiInfoBuilder()
+                        .title("App接口文档")
+                        .version("1.0.0")
+                        .build())
                 ;
     }
-    
+
 }

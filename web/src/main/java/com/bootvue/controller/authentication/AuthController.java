@@ -7,12 +7,13 @@ import com.bootvue.common.result.Result;
 import com.bootvue.common.result.ResultCode;
 import com.bootvue.common.result.ResultUtil;
 import com.bootvue.utils.auth.JwtUtil;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,7 +27,8 @@ import java.util.concurrent.TimeUnit;
 public class AuthController {
     private final RedisTemplate<String, String> redisTemplate;
 
-    @RequestMapping("/refresh_token")
+    @ApiOperation("换取新的token")
+    @PostMapping("/refresh_token")
     public Result<AppToken> refreshToken(@RequestParam(required = true, name = "refresh_token") String refreshToken) {
         if (StringUtils.isEmpty(refreshToken)) {
             throw new AppException(ResultCode.PARAM_ERROR);

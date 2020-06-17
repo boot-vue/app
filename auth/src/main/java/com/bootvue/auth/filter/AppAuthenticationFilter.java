@@ -11,6 +11,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.util.AntPathMatcher;
+import org.springframework.util.PathMatcher;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.FilterChain;
@@ -24,14 +26,21 @@ import java.io.IOException;
  */
 @Slf4j
 public class AppAuthenticationFilter extends BasicAuthenticationFilter {
+    private static final PathMatcher MATCHER = new AntPathMatcher();
+
     public AppAuthenticationFilter(AuthenticationManager authenticationManager) {
         super(authenticationManager);
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
+        String uri = request.getRequestURI();
 
-        if ("/test/list".equalsIgnoreCase(request.getRequestURI()) || "/refresh_token".equalsIgnoreCase(request.getRequestURI())) {
+        if (MATCHER.match("/test/list", uri)
+                || MATCHER.match("/refresh_token", uri)
+                || MATCHER.match("/webjars/**", uri)
+                || MATCHER.match("/v2/**", uri)
+                || MATCHER.match("/swagger*/**", uri)) {
             chain.doFilter(request, response);
             return;
         }
@@ -54,4 +63,5 @@ public class AppAuthenticationFilter extends BasicAuthenticationFilter {
         //放行  --> provider处理认证
         chain.doFilter(request, response);
     }
+
 }
