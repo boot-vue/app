@@ -12,6 +12,9 @@ spring:
       pool-name: app-db-pool
   profiles:
     active: dev
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/changelog/db.changelog-master.xml
 server:
   port: 8080
 logging:

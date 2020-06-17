@@ -15,13 +15,13 @@ public class GlobalExceptionHandle {
 
     @ExceptionHandler(value = AppException.class)
     @ResponseBody
-    public Result handleException(AppException e) {
+    public <T> Result<T> handleException(AppException e) {
         return new Result<>(e.getCode(), e.getMsg(), null);
     }
 
     @ExceptionHandler(value = {RuntimeException.class})
     @ResponseBody
-    public Result handleException(Exception e) {
+    public <T> Result<T> handleException(Exception e) {
         log.error("拦截到异常: ", e);
         return new Result<>(ResultCode.DEFAULT.getCode(), StringUtils.isEmpty(e.getMessage()) ? ResultCode.DEFAULT.getMsg() : e.getMessage(), null);
     }
