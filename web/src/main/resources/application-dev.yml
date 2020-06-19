@@ -10,11 +10,15 @@ spring:
     host: 192.168.221.80
     port: 6379
 #自定义参数
-app:
-  test-param: test
-
 #elastic-job
 #scheduler:
 #  config:
 #    entrypoint: 192.168.3.10:30004
 #    namespace: demoScheduler
+app:
+  allow-list:
+    - /test/list
+    - /refresh_token
+    - /webjars/**
+    - /v2/**
+    - /swagger*/**

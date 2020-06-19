@@ -20,3 +20,5 @@ server:
 logging:
   level:
     root: info
+app:
+  swagger: true

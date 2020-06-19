@@ -11,6 +11,7 @@ import com.bootvue.auth.handler.SuccessHandler;
 import com.bootvue.auth.provider.AppAuthenticationProvider;
 import com.bootvue.auth.provider.JwtAuthenticationProvider;
 import com.bootvue.auth.provider.SmsAuthenticationProvider;
+import com.bootvue.common.config.AppConfig;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -33,10 +34,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final SuccessHandler successHandler;
     private final FailHandler failHandler;
     private final AccessFailHandler accessFailHandler;
+    private final AppConfig appConfig;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable().addFilterBefore(appUsernamePasswordAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+        http.cors().and()
+                .addFilterBefore(appUsernamePasswordAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(appSmsAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .formLogin()
                 .loginProcessingUrl("/login")
@@ -45,9 +48,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .addFilter(new AppAuthenticationFilter(authenticationManager()))
+                .addFilter(new AppAuthenticationFilter(authenticationManager(), appConfig))
                 .exceptionHandling()
-                .accessDeniedHandler(accessFailHandler);
+                .accessDeniedHandler(accessFailHandler)
+                .and().csrf().disable();
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.bootvue.common.config.swagger;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import static com.google.common.collect.Lists.newArrayList;
 
 @Configuration
 @EnableSwagger2
+@ConditionalOnProperty(value = {"app.swagger"}, havingValue = "true")
 public class SwaggerConfig {
 
     @Bean
