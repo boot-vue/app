@@ -16,7 +16,7 @@ public class CustomRedisConfig {
     private final RedisConnectionFactory connectionFactory;
 
     @Bean
-    public RedisTemplate redisTemplate(RedisConnectionFactory connectionFactory) {
+    public RedisTemplate redisTemplate() {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
 
         redisTemplate.setConnectionFactory(connectionFactory);
@@ -33,7 +33,7 @@ public class CustomRedisConfig {
     }
 
     @Bean
-    public StringRedisTemplate stringRedisTemplate(RedisConnectionFactory connectionFactory) {
+    public StringRedisTemplate stringRedisTemplate() {
         StringRedisTemplate redisTemplate = new StringRedisTemplate();
 
         redisTemplate.setConnectionFactory(connectionFactory);

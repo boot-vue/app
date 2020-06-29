@@ -20,17 +20,17 @@ import static com.google.common.collect.Lists.newArrayList;
 @ConditionalOnProperty(value = {"app.swagger"}, havingValue = "true")
 public class SwaggerConfig {
 
-    @Bean
-    public Docket docket() {
+    @Bean(value = "privateAPI")
+    public Docket privateAPI() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.bootvue"))
                 .paths(PathSelectors.any())
-                .build()
+                .build().groupName("privateApi")
                 .pathMapping("/")
                 .genericModelSubstitutes(ResponseEntity.class)
                 .useDefaultResponseMessages(false)
-                .enableUrlTemplating(true)
+                .enableUrlTemplating(false)
                 .globalOperationParameters(
                         newArrayList(new ParameterBuilder()
                                 .name("token")
@@ -39,6 +39,24 @@ public class SwaggerConfig {
                                 .parameterType("header")
                                 .required(true).defaultValue("")
                                 .build()))
+                .apiInfo(new ApiInfoBuilder()
+                        .title("App接口文档")
+                        .version("1.0.0")
+                        .build())
+                ;
+    }
+
+    @Bean(value = "publicApi")
+    public Docket publicApi() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("com.bootvue.controller.authentication"))
+                .paths(PathSelectors.any())
+                .build().groupName("publicApi")
+                .pathMapping("/")
+                .genericModelSubstitutes(ResponseEntity.class)
+                .useDefaultResponseMessages(false)
+                .enableUrlTemplating(false)
                 .apiInfo(new ApiInfoBuilder()
                         .title("App接口文档")
                         .version("1.0.0")

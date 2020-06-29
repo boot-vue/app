@@ -15,12 +15,13 @@ import java.io.Serializable;
 @ApiModel(description = "app token")
 public class AppToken implements Serializable {
     private static final long serialVersionUID = 6189321296358268491L;
+
+    @ApiModelProperty("用户id")
+    private Long userId;
     @ApiModelProperty("access token, 有效时间7200s")
     private String accessToken;
     @ApiModelProperty("refresh token, 有效时间30d")
     private String refreshToken;
-    @ApiModelProperty("剩余过期时间")
-    private Long expire; // 剩余过期时间  秒
 
     @ApiModelProperty("username")
     @JsonIgnore

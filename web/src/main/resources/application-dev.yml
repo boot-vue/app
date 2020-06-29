@@ -17,8 +17,7 @@ spring:
 #    namespace: demoScheduler
 app:
   allow-list:
-    - /test/list
-    - /refresh_token
+    - /auth/**
     - /webjars/**
     - /v2/**
     - /swagger*/**

@@ -21,11 +21,11 @@ public class AppUserDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        // 数据库获取用户
+
         User user = userDao.findByUsername(username);
         if (ObjectUtils.isEmpty(user)) {
             throw new UsernameNotFoundException("用户不存在");
         }
-        return new AppUserDetails(username, user.getPassword(), AuthorityUtils.commaSeparatedStringToAuthorityList(user.getRoles()));
+        return new AppUserDetails(user.getId(), username, user.getPassword(), AuthorityUtils.commaSeparatedStringToAuthorityList(user.getRoles()));
     }
 }

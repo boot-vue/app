@@ -1,5 +1,6 @@
 package com.bootvue.auth.filter;
 
+import com.bootvue.auth.model.AppToken;
 import com.bootvue.auth.model.JwtToken;
 import com.bootvue.auth.util.ResponseUtil;
 import com.bootvue.common.config.AppConfig;
@@ -8,8 +9,10 @@ import com.bootvue.common.result.ResultUtil;
 import com.bootvue.utils.auth.JwtUtil;
 import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.util.AntPathMatcher;
@@ -30,11 +33,13 @@ import java.util.List;
 @Slf4j
 public class AppAuthenticationFilter extends BasicAuthenticationFilter {
     private static final PathMatcher MATCHER = new AntPathMatcher();
-    private AppConfig appConfig;
+    private final AppConfig appConfig;
+    private final RedisTemplate<String, AppToken> redisTemplate;
 
-    public AppAuthenticationFilter(AuthenticationManager authenticationManager, AppConfig appConfig) {
+    public AppAuthenticationFilter(AuthenticationManager authenticationManager, AppConfig appConfig, RedisTemplate<String, AppToken> redisTemplate) {
         super(authenticationManager);
         this.appConfig = appConfig;
+        this.redisTemplate = redisTemplate;
     }
 
     @Override
@@ -62,7 +67,15 @@ public class AppAuthenticationFilter extends BasicAuthenticationFilter {
         Claims params = JwtUtil.decode(token);
         log.debug("用户信息: {}", params);
 
-        JwtToken authToken = new JwtToken(params);
+        Long userId = Long.valueOf(String.valueOf(params.get("user_id")));
+        AppToken appToken = redisTemplate.opsForValue().get("token:user_" + userId);
+        if (StringUtils.isEmpty(appToken)) {
+            ResponseUtil.write(response, ResultUtil.error(ResultCode.TOKEN_ERROR));
+            return;
+        }
+
+        JwtToken authToken = new JwtToken(String.valueOf(params.get("username")), userId,
+                AuthorityUtils.commaSeparatedStringToAuthorityList(String.valueOf(params.get("authorities"))));
         Authentication authResult = this.getAuthenticationManager().authenticate(authToken);
         // context上下文注入 已认证的 对象信息
         SecurityContextHolder.getContext().setAuthentication(authResult);

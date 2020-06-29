@@ -6,7 +6,7 @@ spring:
     hikari:
       #线程池最大数量
       maximum-pool-size: 25
-      #生命周期 25分钟
+      #最大有效时间 25分钟
       max-lifetime: 150000
       #连接池名称
       pool-name: app-db-pool
@@ -15,6 +15,11 @@ spring:
   liquibase:
     enabled: true
     change-log: classpath:/db/changelog/db.changelog-master.xml
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+    property-naming-strategy: SNAKE_CASE
+    default-property-inclusion: non_empty
 server:
   port: 8080
 logging:
@@ -22,3 +27,5 @@ logging:
     root: info
 app:
   swagger: true
+  allow-list:
+    - /auth/**

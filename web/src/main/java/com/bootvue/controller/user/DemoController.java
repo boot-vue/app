@@ -1,5 +1,7 @@
 package com.bootvue.controller.user;
 
+import com.bootvue.common.result.Result;
+import com.bootvue.common.result.ResultUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -20,8 +22,8 @@ public class DemoController {
 
     @ApiOperation("test")
     @GetMapping("/test/list")
-    public String test2() {
+    public Result<DemoObject> test2() {
 
-        return "test";
+        return ResultUtil.success(new DemoObject("张三", 20));
     }
 }

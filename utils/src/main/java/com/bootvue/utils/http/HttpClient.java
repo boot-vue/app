@@ -24,8 +24,8 @@ import java.util.Map;
 
 public class HttpClient {
 
-    private static PoolingHttpClientConnectionManager clientConnectionManager;
-    private static RequestConfig requestConfig;
+    private static final PoolingHttpClientConnectionManager clientConnectionManager;
+    private static final RequestConfig requestConfig;
 
     static {
         //pool
@@ -62,18 +62,14 @@ public class HttpClient {
         URIBuilder uri = new URIBuilder(url);
         if (!CollectionUtils.isEmpty(params)) {
             List<NameValuePair> pairs = new ArrayList<>();
-            params.entrySet().forEach(e -> {
-                pairs.add(new BasicHeader(e.getKey(), e.getValue()));
-            });
+            params.forEach((key, value) -> pairs.add(new BasicHeader(key, value)));
             uri.setParameters(pairs);  //请求参数
         }
 
         //请求头
         HttpGet httpGet = new HttpGet(uri.build());
         if (!CollectionUtils.isEmpty(headers)) {
-            headers.entrySet().forEach(e -> {
-                httpGet.addHeader(e.getKey(), e.getValue());
-            });
+            headers.forEach(httpGet::addHeader);
         }
 
         //请求
@@ -107,17 +103,13 @@ public class HttpClient {
             } else {
                 //application/x-www-form-urlencoded
                 List<NameValuePair> pairs = new ArrayList<>();
-                params.entrySet().forEach(e -> {
-                    pairs.add(new BasicHeader(e.getKey(), e.getValue()));
-                });
+                params.forEach((key, value) -> pairs.add(new BasicHeader(key, value)));
                 httpPost.setEntity(new UrlEncodedFormEntity(pairs));
             }
         }
         //headers
         if (!CollectionUtils.isEmpty(headers)) {
-            headers.entrySet().forEach(e -> {
-                httpPost.addHeader(e.getKey(), e.getValue());
-            });
+            headers.forEach(httpPost::addHeader);
         }
 
         //请求

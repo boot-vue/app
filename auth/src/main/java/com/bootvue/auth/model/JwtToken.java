@@ -11,32 +11,31 @@ public class JwtToken extends AbstractAuthenticationToken {
 
     private static final long serialVersionUID = SpringSecurityCoreVersion.SERIAL_VERSION_UID;
 
-    private Object credentials;   // 用户名
-    private Object principal;
+    private String username;   // 用户名
+    private Long userId;
 
     public JwtToken(Claims params) {
         super(null);
-        this.credentials = String.valueOf(params.get("username"));
-        this.principal = params;
+        this.username = String.valueOf(params.get("username"));
+        this.userId = Long.valueOf(String.valueOf(params.get("user_id")));
         setAuthenticated(false);
     }
 
-    public JwtToken(Object credentials, Object principal, Collection<? extends GrantedAuthority> authorities) {
+    public JwtToken(String username, Long userId, Collection<? extends GrantedAuthority> authorities) {
         super(authorities);
-        this.credentials = credentials;
-        this.principal = principal;
+        this.username = username;
+        this.userId = userId;
         super.setAuthenticated(true); // must use super, as we override
     }
 
-
     @Override
     public Object getCredentials() {
-        return this.credentials;
+        return this.username;
     }
 
     @Override
     public Object getPrincipal() {
-        return this.principal;
+        return this.userId;
     }
 
     @Override
@@ -52,7 +51,7 @@ public class JwtToken extends AbstractAuthenticationToken {
     @Override
     public void eraseCredentials() {
         super.eraseCredentials();
-        credentials = null;
-        principal = null;
+        userId = null;
+        username = null;
     }
 }
