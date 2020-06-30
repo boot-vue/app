@@ -19,9 +19,11 @@ master: 基础功能
 ## 认证
 ```bash
 1. redis : token:user_+id --> userId,username,accessToken,refreshToken,authorities
-2. accessToken: 7200s , refreshToken: 30d
-3. /auth/refresh_token : 参数 (refresh_token, user_id)
-4. /login : 参数(username,password,...)
+2. accessToken: 7200s , refreshToken: 30d 多端共用
+3. /auth/refresh_token : 参数 refresh_token, user_id
+4. /login : 参数 username, password, captcha
+5. /auth/captcha 获取图形验证码 base64
+6. /logout 退出登录
 ```
 
 
