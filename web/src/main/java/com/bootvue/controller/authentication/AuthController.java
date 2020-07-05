@@ -45,6 +45,10 @@ public class AuthController {
             throw new AppException(ResultCode.PARAM_ERROR);
         }
         AppToken appToken = redisTemplate.opsForValue().get("token:user_" + userId);
+        if (ObjectUtils.isEmpty(appToken)) {
+            // refresh_token 失效
+            throw new AppException(ResultCode.REFRESH_TOKEN_ERROR);
+        }
 
         if (!appToken.getUserId().equals(userId) || !appToken.getRefreshToken().equalsIgnoreCase(refreshToken)) {
             throw new AppException(ResultCode.PARAM_ERROR);
