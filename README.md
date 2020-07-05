@@ -11,6 +11,15 @@
 7. com.bootvue.utils.auth.JwtUtil: 修改key等配置 
 ```
 
+## 私钥/公钥
+```bash
+openssl genrsa -out private.pem 4096
+
+openssl rsa -in private.pem -pubout -out public.pem
+
+openssl pkcs8 -topk8 -inform PEM -in private.pem -outform PEM -nocrypt > private_p8.pem
+```
+
 ## 分支
 ```bash
 master: 基础功能
