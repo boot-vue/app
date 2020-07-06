@@ -9,9 +9,9 @@ import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.util.Base64Utils;
-import org.springframework.util.ResourceUtils;
 
 import java.security.KeyFactory;
 import java.security.interfaces.RSAPrivateKey;
@@ -32,12 +32,12 @@ public class JwtUtil {
 
     static {
         try {
-            String Key = FileUtils.readFileToString(ResourceUtils.getFile("classpath:key/private_p8.pem"))
+            String Key = IOUtils.toString(new ClassPathResource("key/private_p8.pem").getInputStream())
                     .replace("-----BEGIN PRIVATE KEY-----", "")
                     .replace("-----END PRIVATE KEY-----", "")
                     .replaceAll("\r", "")
                     .replaceAll("\n", "");
-            String publicK = FileUtils.readFileToString(ResourceUtils.getFile("classpath:key/public.pem"))
+            String publicK = IOUtils.toString(new ClassPathResource("key/public.pem").getInputStream())
                     .replace("-----BEGIN PUBLIC KEY-----", "")
                     .replace("-----END PUBLIC KEY-----", "")
                     .replaceAll("\r", "")
