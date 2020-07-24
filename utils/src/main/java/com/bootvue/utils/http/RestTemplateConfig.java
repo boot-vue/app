@@ -23,7 +23,6 @@ public class RestTemplateConfig {
 
         OkHttpClient okHttpClient = new OkHttpClient(builder);
         ClientHttpRequestFactory factory = new OkHttp3ClientHttpRequestFactory(okHttpClient);
-        RestTemplate restTemplate = new RestTemplate(factory);
-        return restTemplate;
+        return new RestTemplate(factory);
     }
 }

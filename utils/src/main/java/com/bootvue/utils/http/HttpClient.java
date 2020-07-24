@@ -37,9 +37,9 @@ public class HttpClient {
 
         //config
         requestConfig = RequestConfig.custom()
-                .setConnectTimeout(5000)
-                .setSocketTimeout(5000)
-                .setConnectionRequestTimeout(5000)
+                .setConnectTimeout(10000)
+                .setSocketTimeout(10000)
+                .setConnectionRequestTimeout(10000)
                 .build();
     }
 
