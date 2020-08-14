@@ -1,23 +1,28 @@
 spring:
   datasource:
-    url: jdbc:mysql://192.168.221.80:3306/app?characterEncoding=UTF-8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://192.168.49.80:30004/app?characterEncoding=UTF-8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: root
   jpa:
     show-sql: false
   redis:
-    host: 192.168.221.80
-    port: 6379
-#自定义参数
-#elastic-job
-#scheduler:
-#  config:
-#    entrypoint: 192.168.3.10:30004
-#    namespace: demoScheduler
+    host: 192.168.49.80
+    port: 30005
+elasticjob:
+  reg-center:
+    server-lists: master:30000
+    namespace: elasticjob
+  jobs:
+    simpleJob:
+      elasticJobClass: com.bootvue.service.scheduler.DemoJob
+      cron: 0/20 * * * * ?
+      shardingTotalCount: 3
+      shardingItemParameters: 0=Beijing,1=Shanghai,2=Guangzhou
+      overwrite: true
 app:
+  swagger: true
   allow-list:
     - /auth/**
-    - /webjars/**
     - /v2/**
     - /swagger*/**

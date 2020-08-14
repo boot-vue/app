@@ -26,6 +26,5 @@ logging:
   level:
     root: info
 app:
-  swagger: true
   allow-list:
     - /auth/**

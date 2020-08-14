@@ -5,19 +5,18 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.ResponseEntity;
 import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.builders.ParameterBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.schema.ModelRef;
+import springfox.documentation.builders.RequestParameterBuilder;
+import springfox.documentation.schema.ScalarType;
+import springfox.documentation.service.ParameterType;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-import static com.google.common.collect.Lists.newArrayList;
+import java.util.Collections;
 
 @Configuration
-@EnableSwagger2
-@ConditionalOnProperty(value = {"app.swagger"}, havingValue = "true")
+@ConditionalOnProperty(value = {"app.swagger"}, havingValue = "true", matchIfMissing = false)
 public class SwaggerConfig {
 
     @Bean(value = "privateAPI")
@@ -31,13 +30,13 @@ public class SwaggerConfig {
                 .genericModelSubstitutes(ResponseEntity.class)
                 .useDefaultResponseMessages(false)
                 .enableUrlTemplating(false)
-                .globalOperationParameters(
-                        newArrayList(new ParameterBuilder()
+                .globalRequestParameters(
+                        Collections.singletonList(new RequestParameterBuilder()
                                 .name("token")
                                 .description("token信息")
-                                .modelRef(new ModelRef("string"))
-                                .parameterType("header")
-                                .required(true).defaultValue("")
+                                .in(ParameterType.HEADER)
+                                .query(q -> q.model(m -> m.scalarModel(ScalarType.STRING)))
+                                .required(true)
                                 .build()))
                 .apiInfo(new ApiInfoBuilder()
                         .title("App接口文档")

@@ -33,6 +33,7 @@ master: 基础功能
 5. /auth/captcha 获取图形验证码 base64
 6. /logout 退出登录
 7. /auth/sms 发送短信验证码
+8. swagger-ui/index.html api文档
 ```
 
 ### end
