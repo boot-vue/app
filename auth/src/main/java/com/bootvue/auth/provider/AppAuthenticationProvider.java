@@ -1,5 +1,7 @@
 package com.bootvue.auth.provider;
 
+import com.bootvue.auth.authc.AppUserDetails;
+import com.bootvue.auth.model.AppUserToken;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -94,7 +96,10 @@ public class AppAuthenticationProvider extends AbstractUserDetailsAuthentication
             String newPassword = this.passwordEncoder.encode(presentedPassword);
             user = this.userDetailsPasswordService.updatePassword(user, newPassword);
         }
-        return super.createSuccessAuthentication(principal, authentication, user);
+        AppUserDetails userDetails = (AppUserDetails) user;
+        AppUserToken appUserToken = new AppUserToken(userDetails);
+        appUserToken.setDetails(userDetails);
+        return super.createSuccessAuthentication(principal, appUserToken, user);
     }
 
     private void prepareTimingAttackProtection() {
@@ -133,6 +138,11 @@ public class AppAuthenticationProvider extends AbstractUserDetailsAuthentication
 
     public void setUserDetailsService(UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
+    }
+
+    @Override
+    public boolean supports(Class<?> authentication) {
+        return AppUserToken.class.isAssignableFrom(authentication);
     }
 
     public void setUserDetailsPasswordService(

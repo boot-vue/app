@@ -21,6 +21,7 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String username;
+    private String phone;
     private String password;
     // 必须以ROLE_开头  , 分隔
     private String roles;

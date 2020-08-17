@@ -2,6 +2,7 @@ package com.bootvue.controller.authentication;
 
 import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.LineCaptcha;
+import cn.hutool.core.util.RandomUtil;
 import com.bootvue.auth.model.AppToken;
 import com.bootvue.common.result.AppException;
 import com.bootvue.common.result.Result;
@@ -12,6 +13,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -32,10 +34,11 @@ import java.util.concurrent.TimeUnit;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @RequestMapping("/auth")
 @Api(tags = "auth相关")
+@Slf4j
 public class AuthController {
+    private static final LineCaptcha lineCaptcha = CaptchaUtil.createLineCaptcha(200, 100);
     private final RedisTemplate<String, AppToken> redisTemplate;
     private final StringRedisTemplate stringRedisTemplate;
-    private static final LineCaptcha lineCaptcha = CaptchaUtil.createLineCaptcha(200, 100);
 
     @ApiOperation("换取新的token")
     @GetMapping("/refresh_token")
@@ -78,5 +81,13 @@ public class AuthController {
         String image = "data:image/png;base64," + lineCaptcha.getImageBase64();
         stringRedisTemplate.opsForValue().set("captcha:line_" + code, code, 10, TimeUnit.MINUTES);
         return ResultUtil.success(image);
+    }
+
+    @ApiOperation("获取短信验证码")
+    @GetMapping("/sms")
+    public void smsCode(@RequestParam("phone") String phone) {
+        String code = RandomUtil.randomNumbers(6);
+        stringRedisTemplate.opsForValue().set("code:sms_" + phone, code, 15, TimeUnit.MINUTES);
+        log.info("短信验证码 : {}", code);
     }
 }

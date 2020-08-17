@@ -11,5 +11,4 @@ import lombok.Setter;
 @NoArgsConstructor
 public class AppSms {
     private String phone;
-    private String code;
 }

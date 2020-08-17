@@ -13,6 +13,5 @@ public class DemoJob implements SimpleJob {
     @Override
     public void execute(final ShardingContext shardingContext) {
         log.info("shardingContext: {}", shardingContext.toString());
-
     }
 }

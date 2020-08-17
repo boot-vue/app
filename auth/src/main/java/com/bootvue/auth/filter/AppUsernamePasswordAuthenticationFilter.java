@@ -45,21 +45,18 @@ public class AppUsernamePasswordAuthenticationFilter extends UsernamePasswordAut
                 throw new CaptchaException("验证码不能为空");
             }
 
-            String key = "captcha:line_" + code;
+            String key = "captcha:line_" + code.trim();
 
             String captcha = stringRedisTemplate.opsForValue().get(key);
-            if (StringUtils.isEmpty(captcha)) {
-                throw new CaptchaException("验证码错误");
+            if (StringUtils.isEmpty(captcha) || !captcha.equalsIgnoreCase(code)) {
+                throw new CaptchaException("图形验证码错误");
             }
 
             stringRedisTemplate.delete(key);
 
-            username = username.trim();
-            password = password.trim();
-
-            AppUserDetails userDetails = new AppUserDetails(null, username, password, AuthorityUtils.NO_AUTHORITIES);
+            AppUserDetails userDetails = new AppUserDetails(null, username.trim(), password.trim(), AuthorityUtils.NO_AUTHORITIES);
             AppUserToken authRequest = new AppUserToken(userDetails);
-            this.setDetails(request, authRequest);
+            authRequest.setDetails(userDetails);
             return this.getAuthenticationManager().authenticate(authRequest);
         }
     }

@@ -10,27 +10,24 @@ public class AppSmsToken extends AbstractAuthenticationToken {
 
     private static final long serialVersionUID = SpringSecurityCoreVersion.SERIAL_VERSION_UID;
 
-    private Object credentials;
     private Object principal;
 
     public AppSmsToken(AppSms sms) {
         super(null);
-        this.credentials = sms.getPhone();
-        this.principal = sms.getCode();
+        this.principal = sms.getPhone();
         setAuthenticated(false);
     }
 
-    public AppSmsToken(Object credentials, Object principal,
-                       Collection<? extends GrantedAuthority> authorities) {
+    public AppSmsToken(Object principal, Collection<? extends GrantedAuthority> authorities) {
         super(authorities);
-        this.credentials = credentials;
         this.principal = principal;
         super.setAuthenticated(true); // must use super, as we override
     }
 
 
+    @Override
     public Object getCredentials() {
-        return this.credentials;
+        return null;
     }
 
     @Override
@@ -50,7 +47,6 @@ public class AppSmsToken extends AbstractAuthenticationToken {
     @Override
     public void eraseCredentials() {
         super.eraseCredentials();
-        credentials = null;
         principal = null;
     }
 }

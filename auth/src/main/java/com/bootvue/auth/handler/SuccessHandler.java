@@ -40,7 +40,7 @@ public class SuccessHandler implements AuthenticationSuccessHandler {
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         // 返回token
         Map<String, Object> params = new HashMap<>();
-        AppUserDetails userDetails = (AppUserDetails) authentication.getPrincipal();
+        AppUserDetails userDetails = (AppUserDetails) authentication.getDetails();
         params.put("user_id", userDetails.getUserId());
         params.put("username", userDetails.getUsername());
         Collection<GrantedAuthority> authorities = userDetails.getAuthorities();

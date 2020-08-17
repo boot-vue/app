@@ -16,7 +16,7 @@ elasticjob:
   jobs:
     simpleJob:
       elasticJobClass: com.bootvue.service.scheduler.DemoJob
-      cron: 0/20 * * * * ?
+      cron: 0/45 * * * * ?
       shardingTotalCount: 3
       shardingItemParameters: 0=Beijing,1=Shanghai,2=Guangzhou
       overwrite: true

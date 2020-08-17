@@ -1,14 +1,17 @@
 package com.bootvue.auth.filter;
 
+import com.bootvue.auth.exception.CaptchaException;
 import com.bootvue.auth.model.AppSms;
 import com.bootvue.auth.model.AppSmsToken;
-import com.bootvue.auth.util.AuthcConst;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,12 +20,12 @@ import javax.servlet.http.HttpServletResponse;
  * 短信登录
  */
 public class AppSmsAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
-    public static final String SPRING_SECURITY_FORM_PHONE_KEY = AuthcConst.PHONE_KEY;
-    public static final String SPRING_SECURITY_FORM_CODE_KEY = AuthcConst.PHONE_CODE;
+    private final StringRedisTemplate stringRedisTemplate;
     private boolean postOnly = true;
 
-    public AppSmsAuthenticationFilter() {
-        super(new AntPathRequestMatcher(AuthcConst.SMS_LOGIN_URL, HttpMethod.POST.toString()));
+    public AppSmsAuthenticationFilter(StringRedisTemplate template) {
+        super(new AntPathRequestMatcher("/login/sms", HttpMethod.POST.toString()));
+        this.stringRedisTemplate = template;
     }
 
     @Override
@@ -32,26 +35,50 @@ public class AppSmsAuthenticationFilter extends AbstractAuthenticationProcessing
         } else {
             String phone = this.obtainPhone(request);
             String code = this.obtainCode(request);
-            if (phone == null) {
-                phone = "";
+            String captcha = this.obtainCaptcha(request);
+
+            if (StringUtils.isEmpty(phone) || StringUtils.isEmpty(code)) {
+                throw new UsernameNotFoundException("手机号 验证码不能为空");
             }
 
-            if (code == null) {
-                code = "";
+            if (StringUtils.isEmpty(captcha)) {
+                throw new CaptchaException("验证码不能为空");
             }
 
-            AppSmsToken authRequest = new AppSmsToken(new AppSms(phone, code));
+            String captchaKey = "captcha:line_" + captcha.trim();
+
+            String captchaCode = stringRedisTemplate.opsForValue().get(captchaKey);
+            if (StringUtils.isEmpty(captchaCode) || !captchaCode.equalsIgnoreCase(captcha)) {
+                throw new CaptchaException("图形验证码错误");
+            }
+
+            stringRedisTemplate.delete(captchaKey);
+
+            String smsCodeKey = "code:sms_" + phone.trim();
+
+            String smsCode = stringRedisTemplate.opsForValue().get(smsCodeKey);
+            if (StringUtils.isEmpty(smsCode) || !smsCode.equalsIgnoreCase(code)) {
+                throw new CaptchaException("手机验证码错误");
+            }
+
+            stringRedisTemplate.delete(smsCodeKey);
+
+            AppSmsToken authRequest = new AppSmsToken(new AppSms(phone.trim()));
             this.setDetails(request, authRequest);
             return this.getAuthenticationManager().authenticate(authRequest);
         }
     }
 
+    private String obtainCaptcha(HttpServletRequest request) {
+        return request.getParameter("captcha");
+    }
+
     protected String obtainPhone(HttpServletRequest request) {
-        return request.getParameter(SPRING_SECURITY_FORM_PHONE_KEY);
+        return request.getParameter("phone");
     }
 
     protected String obtainCode(HttpServletRequest request) {
-        return request.getParameter(SPRING_SECURITY_FORM_CODE_KEY);
+        return request.getParameter("code");
     }
 
     protected void setDetails(HttpServletRequest request, AppSmsToken authRequest) {
