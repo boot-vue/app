@@ -7,13 +7,13 @@ import com.bootvue.auth.util.ResponseUtil;
 import com.bootvue.common.dao.UserDao;
 import com.bootvue.common.result.ResultUtil;
 import com.bootvue.utils.auth.JwtUtil;
+import com.google.common.base.Joiner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 
 import javax.servlet.ServletException;
@@ -45,14 +45,7 @@ public class SuccessHandler implements AuthenticationSuccessHandler {
         params.put("username", userDetails.getUsername());
         Collection<GrantedAuthority> authorities = userDetails.getAuthorities();
         String key = "token:user_" + userDetails.getUserId();
-        String authoritiesStr = "";
-
-        if (!CollectionUtils.isEmpty(authorities)) {
-            StringBuffer buffer = new StringBuffer();
-            // 转成 , 分割
-            authorities.forEach(e -> buffer.append(e.getAuthority()).append(","));
-            authoritiesStr = buffer.toString().substring(0, buffer.toString().length() - 1);
-        }
+        String authoritiesStr = Joiner.on(',').skipNulls().join(authorities);
         params.put("authorities", authoritiesStr);
 
         // 判断是否redis 已存在 user_id
