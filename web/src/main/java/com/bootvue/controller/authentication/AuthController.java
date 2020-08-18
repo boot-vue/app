@@ -85,9 +85,10 @@ public class AuthController {
 
     @ApiOperation("获取短信验证码")
     @GetMapping("/sms")
-    public void smsCode(@RequestParam("phone") String phone) {
+    public Result smsCode(@RequestParam("phone") String phone) {
         String code = RandomUtil.randomNumbers(6);
         stringRedisTemplate.opsForValue().set("code:sms_" + phone, code, 15, TimeUnit.MINUTES);
         log.info("短信验证码 : {}", code);
+        return ResultUtil.success();
     }
 }

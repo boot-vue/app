@@ -39,6 +39,3 @@ master: 基础功能
 7. /auth/sms 发送短信验证码
 8. swagger-ui/index.html api文档
 ```
-
-### end
-[] 坐等elastic-job 3.x版本发布
