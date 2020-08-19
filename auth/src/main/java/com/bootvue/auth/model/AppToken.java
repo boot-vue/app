@@ -1,6 +1,5 @@
 package com.bootvue.auth.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -24,10 +23,8 @@ public class AppToken implements Serializable {
     private String refreshToken;
 
     @ApiModelProperty("username")
-    @JsonIgnore
     private String username;
 
-    @JsonIgnore
     @ApiModelProperty("权限")
     private String authorities;
 }
