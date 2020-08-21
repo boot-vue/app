@@ -16,7 +16,8 @@ openssl pkcs8 -topk8 -inform PEM -in private.pem -outform PEM -nocrypt > private
 ## 说明
 ```bash
 1. redis :
-    token:user_+id --> {userId,username,accessToken,refreshToken,authorities}
+    refresh_token:user_+id --> set(access_token) 30d
+    access_token:user_+id ---> set(appToken) 7200s
     code:sms_ + phone --> code
     captcha:line_ + code --> code
 2. accessToken: 7200s , refreshToken: 30d 多端共用
