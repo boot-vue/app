@@ -68,11 +68,6 @@ public class AppAuthenticationFilter extends BasicAuthenticationFilter {
         log.debug("用户信息: {}", params);
 
         Long userId = Long.valueOf(String.valueOf(params.get("user_id")));
-        AppToken appToken = redisTemplate.opsForValue().get("token:user_" + userId);
-        if (StringUtils.isEmpty(appToken)) {
-            ResponseUtil.write(response, ResultUtil.error(ResultCode.TOKEN_ERROR));
-            return;
-        }
 
         JwtToken authToken = new JwtToken(String.valueOf(params.get("username")), userId,
                 AuthorityUtils.commaSeparatedStringToAuthorityList(String.valueOf(params.get("authorities"))));
