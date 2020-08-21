@@ -1,6 +1,5 @@
 package com.bootvue.service.scheduler;
 
-
 import com.xxl.job.core.biz.model.ReturnT;
 import com.xxl.job.core.handler.annotation.XxlJob;
 import lombok.extern.slf4j.Slf4j;
