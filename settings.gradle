@@ -1,0 +1,6 @@
+rootProject.name = 'app'
+include 'utils'
+include 'common'
+include 'auth'
+include 'service'
+include 'web'

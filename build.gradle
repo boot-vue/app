@@ -1,0 +1,66 @@
+plugins {
+    id 'java-library'
+    id 'org.springframework.boot' version '2.3.3.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+}
+
+apply from: 'version.gradle'
+
+allprojects {
+    group 'com.bootvue'
+    version '0.1.0-SNAPSHOT'
+
+    repositories {
+        maven {
+            url 'https://maven.aliyun.com/repository/public/'
+        }
+        mavenCentral()
+    }
+
+}
+
+subprojects {
+    apply plugin: 'java-library'
+    apply plugin: "io.spring.dependency-management"
+
+    dependencyManagement {
+        imports {
+            mavenBom org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
+        }
+    }
+
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+
+    [compileJava, compileTestJava, javadoc]*.options*.encoding = 'UTF-8'
+
+    jar {
+        enabled = true
+    }
+    bootJar {
+        enabled = false
+    }
+
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+    }
+
+    dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter'
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+        implementation 'org.springframework.boot:spring-boot-starter-validation'
+        implementation libs['fastjson']
+
+        compileOnly 'org.projectlombok:lombok'
+        annotationProcessor 'org.projectlombok:lombok'
+        annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+        testImplementation('org.springframework.boot:spring-boot-starter-test') {
+            exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+        }
+    }
+    test {
+        useJUnitPlatform()
+    }
+}

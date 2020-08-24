@@ -19,7 +19,7 @@ xxl:
       ip:
       port: 9999
       appname: test-executor
-      logpath: E:/log
+      logpath: D:/log
       logretentiondays: 7
 app:
   swagger: true

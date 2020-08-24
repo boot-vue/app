@@ -16,12 +16,10 @@ public class RestTemplateConfig {
     public RestTemplate restTemplate() {
         //需要其它额外的功能可以再这里配置
 
-        OkHttpClient.Builder builder = new OkHttpClient.Builder()
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .callTimeout(Duration.ofSeconds(10L))
                 .connectTimeout(Duration.ofSeconds(10L)).readTimeout(Duration.ofSeconds(10L))
-                .writeTimeout(Duration.ofSeconds(10L));
-
-        OkHttpClient okHttpClient = new OkHttpClient(builder);
+                .writeTimeout(Duration.ofSeconds(10L)).build();
         ClientHttpRequestFactory factory = new OkHttp3ClientHttpRequestFactory(okHttpClient);
         return new RestTemplate(factory);
     }
