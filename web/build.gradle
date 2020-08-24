@@ -1,0 +1,14 @@
+plugins {
+    id 'org.springframework.boot'
+}
+
+dependencies {
+    implementation project(":service")
+}
+
+bootJar {
+    enabled = true
+    mainClassName = 'com.bootvue.WebApplication'
+    destinationDirectory = file(getRootProject().getBuildDir())
+    archiveFileName = 'app.jar'
+}

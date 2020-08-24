@@ -1,0 +1,12 @@
+dependencies {
+    api libs['httpmime']
+    api libs['hutool']
+    api libs['commons-fileupload']
+    api libs['okhttp']
+    api libs['commons-lang3']
+    api libs['guava']
+    api libs['thumbnailator']
+    api libs['Excel4J']
+    api libs['java-jwt']
+    api libs['jjwt']
+}
