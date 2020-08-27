@@ -21,10 +21,10 @@ public class SwaggerConfig {
 
     @Bean(value = "privateAPI")
     public Docket privateAPI() {
-        return new Docket(DocumentationType.SWAGGER_2)
+        return new Docket(DocumentationType.OAS_30)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.bootvue"))
-                .paths(PathSelectors.any())
+                .paths(PathSelectors.regex("^(?!/auth).*"))
                 .build().groupName("privateApi")
                 .pathMapping("/")
                 .genericModelSubstitutes(ResponseEntity.class)
@@ -47,7 +47,7 @@ public class SwaggerConfig {
 
     @Bean(value = "publicApi")
     public Docket publicApi() {
-        return new Docket(DocumentationType.SWAGGER_2)
+        return new Docket(DocumentationType.OAS_30)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.bootvue.controller.authentication"))
                 .paths(PathSelectors.any())

@@ -24,5 +24,5 @@ app:
   swagger: true
   allow-list:
     - /auth/**
-    - /v2/**
+    - /v3/**
     - /swagger*/**
