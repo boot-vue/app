@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.flowable.org/processdef">
+  <process id="holiday01" name="holiday01" isExecutable="true">
+    <startEvent id="sid-7e19c85e-d698-465d-b233-7d3ea44ff4ad" name="start"/>
+    <userTask id="sid-ddf16359-a081-4b38-99be-8a90b9446b33" name="add form" xmlns:flowable="http://flowable.org/bpmn" flowable:assignee="zs"/>
+    <sequenceFlow id="sid-f0755ada-4bd3-4dba-8b90-477925714ea2" sourceRef="sid-7e19c85e-d698-465d-b233-7d3ea44ff4ad" targetRef="sid-ddf16359-a081-4b38-99be-8a90b9446b33"/>
+    <userTask id="sid-cfee3c02-fcce-42da-b764-a80e1c195cc7" name="shenpi" xmlns:flowable="http://flowable.org/bpmn" flowable:assignee="lisi"/>
+    <sequenceFlow id="sid-ddcaff8b-a268-46fd-8558-5a1515b328fa" sourceRef="sid-ddf16359-a081-4b38-99be-8a90b9446b33" targetRef="sid-cfee3c02-fcce-42da-b764-a80e1c195cc7"/>
+    <endEvent id="sid-72caab44-18e0-4384-8695-789f0257deb0" name="end"/>
+    <sequenceFlow id="sid-1e8cd581-f7c9-4d42-b933-aa89944d0298" sourceRef="sid-cfee3c02-fcce-42da-b764-a80e1c195cc7" targetRef="sid-72caab44-18e0-4384-8695-789f0257deb0"/>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_holiday01">
+    <bpmndi:BPMNPlane bpmnElement="holiday01" id="BPMNPlane_holiday01">
+      <bpmdi:BPMNShape xmlns:bpmdi="http://www.omg.org/spec/BPMN/20100524/DI" id="shape-972cdde3-10c9-4b09-bae3-f30a9f51e48e" bpmnElement="sid-7e19c85e-d698-465d-b233-7d3ea44ff4ad">
+        <omgdc:Bounds xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" x="55.0" y="139.0" width="30.0" height="30.0"/>
+      </bpmdi:BPMNShape>
+      <bpmdi:BPMNShape xmlns:bpmdi="http://www.omg.org/spec/BPMN/20100524/DI" id="shape-72efa01a-2774-4866-9cc3-277d7e5dfb8e" bpmnElement="sid-ddf16359-a081-4b38-99be-8a90b9446b33">
+        <omgdc:Bounds xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" x="261.0" y="113.0" width="100.0" height="80.0"/>
+      </bpmdi:BPMNShape>
+      <bpmdi:BPMNEdge xmlns:bpmdi="http://www.omg.org/spec/BPMN/20100524/DI" id="edge-5c0fb142-9197-45a3-835c-4f9ae96349d6" bpmnElement="sid-f0755ada-4bd3-4dba-8b90-477925714ea2">
+        <omgdi:waypoint xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" x="85.0" y="154.0"/>
+        <omgdi:waypoint xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" x="261.0" y="153.0"/>
+      </bpmdi:BPMNEdge>
+      <bpmdi:BPMNShape xmlns:bpmdi="http://www.omg.org/spec/BPMN/20100524/DI" id="shape-73aedfb8-f256-419d-8a8d-a448598ff876" bpmnElement="sid-cfee3c02-fcce-42da-b764-a80e1c195cc7">
+        <omgdc:Bounds xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" x="261.0" y="293.0" width="100.0" height="80.0"/>
+      </bpmdi:BPMNShape>
+      <bpmdi:BPMNEdge xmlns:bpmdi="http://www.omg.org/spec/BPMN/20100524/DI" id="edge-e3b7b465-0a03-44fb-bd94-f3fd241cde54" bpmnElement="sid-ddcaff8b-a268-46fd-8558-5a1515b328fa">
+        <omgdi:waypoint xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" x="311.0" y="193.0"/>
+        <omgdi:waypoint xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" x="311.0" y="293.0"/>
+      </bpmdi:BPMNEdge>
+      <bpmdi:BPMNShape xmlns:bpmdi="http://www.omg.org/spec/BPMN/20100524/DI" id="shape-c9030fe6-c8a1-400b-9487-6a3502cd3b8f" bpmnElement="sid-72caab44-18e0-4384-8695-789f0257deb0">
+        <omgdc:Bounds xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" x="284.0" y="466.0" width="30.0" height="30.0"/>
+      </bpmdi:BPMNShape>
+      <bpmdi:BPMNEdge xmlns:bpmdi="http://www.omg.org/spec/BPMN/20100524/DI" id="edge-c69f02b6-4816-4846-b042-7664e161d510" bpmnElement="sid-1e8cd581-f7c9-4d42-b933-aa89944d0298">
+        <omgdi:waypoint xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" x="311.0" y="373.0"/>
+        <omgdi:waypoint xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" x="306.5" y="466.0"/>
+      </bpmdi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

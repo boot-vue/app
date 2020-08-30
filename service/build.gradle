@@ -1,3 +1,6 @@
 dependencies {
     api project(':auth')
+
+    api group: 'org.flowable', name: 'flowable-spring-boot-starter', version: '6.5.0'
+
 }
