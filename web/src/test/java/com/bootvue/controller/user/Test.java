@@ -1,19 +1,19 @@
 package com.bootvue.controller.user;
 
 import groovy.util.logging.Slf4j;
+import org.flowable.engine.HistoryService;
 import org.flowable.engine.RepositoryService;
 import org.flowable.engine.RuntimeService;
 import org.flowable.engine.TaskService;
 import org.flowable.engine.repository.ProcessDefinition;
+import org.flowable.engine.runtime.ProcessInstance;
 import org.flowable.task.api.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.List;
-
 @SpringBootTest
 @Slf4j
-public class Test {
+class Test {
 
     @Autowired
     private RepositoryService repositoryService;
@@ -21,22 +21,26 @@ public class Test {
     private RuntimeService runtimeService;
     @Autowired
     private TaskService taskService;
+    @Autowired
+    private HistoryService historyService;
 
     @org.junit.jupiter.api.Test
-    public void test() {
+    public void test() throws InterruptedException {
 
-        ProcessDefinition holiday = repositoryService.createProcessDefinitionQuery().processDefinitionName("holiday01").singleResult();
+        ProcessDefinition holiday = repositoryService.createProcessDefinitionQuery()
+                .processDefinitionName("holiday01").singleResult();
 
-        //ProcessInstance processInstance = runtimeService.startProcessInstanceById(holiday.getId());
+        ProcessInstance instance = runtimeService.startProcessInstanceById(holiday.getId());
 
-        // System.out.println(processInstance.toString());
+        Task zs = taskService.createTaskQuery().taskAssignee("zs").singleResult();
 
-        List<Task> taskList = taskService.createTaskQuery()
+        taskService.complete(zs.getId());
+
+        historyService.createHistoricActivityInstanceQuery()
                 .processDefinitionId(holiday.getId())
-                .taskAssignee("zs").list();
+                .processInstanceId(instance.getId())
+                .list().forEach(e -> System.out.println(e.getId() + " " + e.getActivityType() + "  " + e.getActivityName() + "  " + e.getAssignee()));
 
-        taskList.forEach(e -> {
-            System.out.println(e.toString());
-        });
+        Thread.sleep(3000L);
     }
 }
