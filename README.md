@@ -1,8 +1,9 @@
 ## 分支
 
 ```bash
-dev:  xxl-job 需要调度中心
-master:  elastic-job 需要zookeeper & 调度中心(前后端分离部署)
+dev:  xxl-job 需要调度中心 & flyway
+devx:  xxl-job 需要调度中心 & liquibase
+ex:  elastic-job 需要zookeeper & 调度中心(前后端分离部署)
 ```
 
 ## 私钥/公钥
