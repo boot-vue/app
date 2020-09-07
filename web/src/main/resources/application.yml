@@ -12,14 +12,14 @@ spring:
       pool-name: app-db-pool
   profiles:
     active: dev
-  liquibase:
-    enabled: true
-    change-log: classpath:/db/changelog/db.changelog-master.xml
   jackson:
     time-zone: GMT+8
     date-format: yyyy-MM-dd HH:mm:ss
     property-naming-strategy: SNAKE_CASE
     default-property-inclusion: non_empty
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
 server:
   port: 8080
 logging:

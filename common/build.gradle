@@ -1,3 +1,6 @@
+plugins {
+    id "org.flywaydb.flyway" version "${FlywayPluginVersion}"
+}
 dependencies {
     api libs['mysql']
     api libs['xxl-job']
@@ -5,7 +8,7 @@ dependencies {
     api libs['mybatis']
     api libs['mybatis-plus']
     api libs['springfox']
-    api libs['liquibase']
+    api libs['flyway']
     api 'org.springframework.boot:spring-boot-starter-data-jpa'
     api 'org.springframework.boot:spring-boot-starter-data-redis'
 

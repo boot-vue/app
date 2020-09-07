@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://192.168.49.80:30004/app?characterEncoding=UTF-8&useSSL=false&autoReconnect=true&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://192.168.49.80:30002/app?characterEncoding=UTF-8&useSSL=false&autoReconnect=true&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: root
@@ -8,7 +8,7 @@ spring:
     show-sql: false
   redis:
     host: 192.168.49.80
-    port: 30005
+    port: 30001
 xxl:
   job:
     admin:
