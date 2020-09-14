@@ -25,6 +25,8 @@ import java.util.UUID;
 
 @Slf4j
 public class JwtUtil {
+    private static final String iss = "app";
+    private static final SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.RS256;
 
     // 生成签名是所使用的私钥
     private static RSAPrivateKey privateKey;
@@ -55,13 +57,6 @@ public class JwtUtil {
             log.error("pkcs8私钥有问题...", e);
         }
     }
-
-    // 签发人
-    private static final String iss = "app";
-
-    // 生成签名的时候所使用的加密算法
-    private static final SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.RS256;
-
 
     /**
      * 生成 JWT Token 字符串

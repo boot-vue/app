@@ -4,11 +4,8 @@ spring:
     name: app
   datasource:
     hikari:
-      #线程池最大数量
       maximum-pool-size: 25
-      #最大有效时间 25分钟
       max-lifetime: 150000
-      #连接池名称
       pool-name: app-db-pool
   profiles:
     active: dev
