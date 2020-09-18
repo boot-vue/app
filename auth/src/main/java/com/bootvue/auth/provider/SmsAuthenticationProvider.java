@@ -32,7 +32,7 @@ public class SmsAuthenticationProvider implements AuthenticationProvider {
             throw new InternalAuthenticationServiceException("用户不存在");
         }
 
-        AppUserDetails userDetails = new AppUserDetails(user.getId(), user.getUsername(), user.getPassword(),
+        AppUserDetails userDetails = new AppUserDetails(user.getId(), user.getUsername(), user.getPassword(), true,
                 AuthorityUtils.commaSeparatedStringToAuthorityList(user.getRoles()));
         AppSmsToken authenticationResult = new AppSmsToken(userDetails, AuthorityUtils.commaSeparatedStringToAuthorityList(user.getRoles()));
         authenticationResult.setDetails(userDetails);

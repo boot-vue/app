@@ -26,6 +26,7 @@ public class AppUserDetailService implements UserDetailsService {
         if (ObjectUtils.isEmpty(user)) {
             throw new UsernameNotFoundException("用户不存在");
         }
-        return new AppUserDetails(user.getId(), username, user.getPassword(), AuthorityUtils.commaSeparatedStringToAuthorityList(user.getRoles()));
+        return new AppUserDetails(user.getId(), username, user.getPassword(),
+                user.getStatus() == 0, AuthorityUtils.commaSeparatedStringToAuthorityList(user.getRoles()));
     }
 }

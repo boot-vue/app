@@ -25,7 +25,9 @@ public class User implements Serializable {
     private String password;
     // 必须以ROLE_开头  , 分隔
     private String roles;
+    private Integer status;  // 0:有效  1:无效
 
     private Date createTime;
     private Date updateTime;
+    private Date deleteTime;
 }

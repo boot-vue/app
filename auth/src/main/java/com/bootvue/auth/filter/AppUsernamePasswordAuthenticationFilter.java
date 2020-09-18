@@ -54,7 +54,7 @@ public class AppUsernamePasswordAuthenticationFilter extends UsernamePasswordAut
 
             stringRedisTemplate.delete(key);
 
-            AppUserDetails userDetails = new AppUserDetails(null, username.trim(), password.trim(), AuthorityUtils.NO_AUTHORITIES);
+            AppUserDetails userDetails = new AppUserDetails(null, username.trim(), password.trim(), true, AuthorityUtils.NO_AUTHORITIES);
             AppUserToken authRequest = new AppUserToken(userDetails);
             authRequest.setDetails(userDetails);
             return this.getAuthenticationManager().authenticate(authRequest);
