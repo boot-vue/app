@@ -1,21 +1,7 @@
 /*
- Navicat Premium Data Transfer
-
- Source Server         : master
- Source Server Type    : MySQL
- Source Server Version : 80020
- Source Host           : 192.168.221.80:3306
- Source Schema         : app
-
- Target Server Type    : MySQL
- Target Server Version : 80020
- File Encoding         : 65001
-
- Date: 17/06/2020 17:13:29
+ Source Server         : mysql8
+ Author                : bootvue@gmail.com
 */
-
-CREATE database if NOT EXISTS `app` default character set utf8mb4 collate utf8mb4_0900_ai_ci;
-use `app`;
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
@@ -27,11 +13,11 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user`
 (
     `id`          bigint(0)                                                     NOT NULL AUTO_INCREMENT,
-    `username`    varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci  NOT NULL,
-    `phone`       varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci           DEFAULT NULL,
-    `password`    varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci  NOT NULL,
-    `roles`       varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL     DEFAULT NULL,
-    `status`      tinyint(1)                                                    NOT NULL DEFAULT 0,
+    `username`    varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci  NOT NULL comment '用户名',
+    `phone`       varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci           DEFAULT NULL comment '手机号',
+    `password`    varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci  NOT NULL comment '密码',
+    `roles`       varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL     DEFAULT NULL comment '角色权限',
+    `status`      tinyint(1)                                                    NOT NULL DEFAULT 0 comment '0:正常 1:禁用',
     `create_time` datetime(0)                                                   NOT NULL DEFAULT NOW(),
     `update_time` datetime(0)                                                   NULL     DEFAULT NULL,
     `delete_time` datetime(0)                                                   NULL     DEFAULT NULL,
