@@ -14,6 +14,9 @@
  Date: 17/06/2020 17:13:29
 */
 
+CREATE database if NOT EXISTS `app` default character set utf8mb4 collate utf8mb4_0900_ai_ci;
+use `app`;
+
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
