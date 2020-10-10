@@ -1,6 +1,5 @@
 package com.bootvue.controller.user;
 
-import com.bootvue.common.result.Result;
 import com.bootvue.common.result.ResultUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -26,9 +25,9 @@ public class DemoController {
 
     @ApiOperation("test")
     @PostMapping("/test/list")
-    public Result<DemoObject> test2(@RequestBody @Valid DemoObject object, BindingResult result) {
+    public DemoObject test2(@RequestBody @Valid DemoObject object, BindingResult result) {
         log.info("test: {}", object);
         ResultUtil.handleErr(result);
-        return ResultUtil.success(new DemoObject("<div>333</div>", 20));
+        return new DemoObject("op00", 20);
     }
 }
