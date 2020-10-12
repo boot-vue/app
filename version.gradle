@@ -1,24 +1,24 @@
 ext {
     versions = [
-            fastjson         : '1.2.73',
+            fastjson         : '1.2.74',
             commonsText      : '1.9',
             mysql            : '8.0.21',
             xxlJob           : '2.2.0',
-            redisson         : '3.13.4',
+            redisson         : '3.13.5',
             mybatis          : '2.1.3',
             mybatisPlus      : '3.4.0',
             springfox        : '3.0.0',
-            httpmime         : '4.5.12',
-            hutool           : '5.4.2',
+            httpmime         : '4.5.13',
+            hutool           : '5.4.4',
             commonsFileupload: '1.4',
             okhttp           : '4.9.0',
             commonsLang3     : '3.11',
             guava            : '29.0-jre',
             thumbnailator    : '0.4.12',
             Excel4J          : '3.0.0',
-            javaJwt          : '3.10.3',
+            javaJwt          : '3.11.0',
             jjwt             : '0.9.1',
-            flyway           : '6.5.6'
+            flyway           : '6.5.7'
     ]
 
     libs = [

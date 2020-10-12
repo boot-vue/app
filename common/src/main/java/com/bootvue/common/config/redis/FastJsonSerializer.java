@@ -21,7 +21,7 @@ public class FastJsonSerializer<T> implements RedisSerializer<T> {
         config.propertyNamingStrategy = PropertyNamingStrategy.SnakeCase;
     }
 
-    private Class<T> clazz;
+    private final Class<T> clazz;
 
     public FastJsonSerializer(Class<T> clazz) {
         super();
