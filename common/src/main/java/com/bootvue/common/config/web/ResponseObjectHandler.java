@@ -12,7 +12,7 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestResponseBody
 
 public class ResponseObjectHandler implements HandlerMethodReturnValueHandler {
 
-    private RequestResponseBodyMethodProcessor requestResponseBodyMethodProcessor;
+    private final RequestResponseBodyMethodProcessor requestResponseBodyMethodProcessor;
 
     public ResponseObjectHandler(RequestResponseBodyMethodProcessor requestResponseBodyMethodProcessor) {
         this.requestResponseBodyMethodProcessor = requestResponseBodyMethodProcessor;

@@ -7,9 +7,7 @@ import com.bootvue.auth.model.AppToken;
 import com.bootvue.common.dao.UserDao;
 import com.bootvue.common.entity.User;
 import com.bootvue.common.result.AppException;
-import com.bootvue.common.result.Result;
 import com.bootvue.common.result.ResultCode;
-import com.bootvue.common.result.ResultUtil;
 import com.bootvue.utils.auth.JwtUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.common.base.Joiner;
@@ -48,8 +46,8 @@ public class AuthController {
 
     @ApiOperation("换取新的token")
     @GetMapping("/refresh_token")
-    public Result<AppToken> refreshToken(@RequestParam(name = "refresh_token") String refreshToken,
-                                         @RequestParam(name = "user_id") Long userId) throws JsonProcessingException {
+    public AppToken refreshToken(@RequestParam(name = "refresh_token") String refreshToken,
+                                 @RequestParam(name = "user_id") Long userId) throws JsonProcessingException {
         if (StringUtils.isEmpty(refreshToken) || ObjectUtils.isEmpty(userId)) {
             throw new AppException(ResultCode.PARAM_ERROR);
         }
@@ -76,25 +74,24 @@ public class AuthController {
         RSetCache<AppToken> accessTokenSet = redissonClient.getSetCache(String.format("access_token:user_%s", userId));
         accessTokenSet.add(appToken, 2L, TimeUnit.HOURS);
 
-        return ResultUtil.success(appToken);
+        return appToken;
     }
 
     @ApiOperation("获取图形验证码")
     @GetMapping("/captcha")
-    public Result<String> captcha() {
+    public String captcha() {
         lineCaptcha.createCode();
         String code = lineCaptcha.getCode();
         String image = "data:image/png;base64," + lineCaptcha.getImageBase64();
         redisTemplate.opsForValue().set("captcha:line_" + code, code, 10, TimeUnit.MINUTES);
-        return ResultUtil.success(image);
+        return image;
     }
 
     @ApiOperation("获取短信验证码")
     @GetMapping("/sms")
-    public Result smsCode(@RequestParam("phone") String phone) {
+    public void smsCode(@RequestParam("phone") String phone) {
         String code = RandomUtil.randomNumbers(6);
         redisTemplate.opsForValue().set("code:sms_" + phone, code, 15, TimeUnit.MINUTES);
         log.info("短信验证码 : {}", code);
-        return ResultUtil.success();
     }
 }
