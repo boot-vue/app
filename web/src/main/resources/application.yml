@@ -26,5 +26,5 @@ logging:
   level:
     root: info
 app:
-  allaow-list:
+  allow-list:
     - /auth/**
