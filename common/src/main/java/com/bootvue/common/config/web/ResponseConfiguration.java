@@ -10,6 +10,7 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestResponseBody
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Configuration
 public class ResponseConfiguration implements InitializingBean {
@@ -19,11 +20,10 @@ public class ResponseConfiguration implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        final List<HandlerMethodReturnValueHandler> originalHandlers = new ArrayList<>(requestMappingHandlerAdapter.getReturnValueHandlers());
+        final List<HandlerMethodReturnValueHandler> originalHandlers = new ArrayList<>(Objects.requireNonNull(requestMappingHandlerAdapter.getReturnValueHandlers()));
 
         RequestResponseBodyMethodProcessor requestResponseBodyMethodProcessor = null;
-        for (int i = 0; i < originalHandlers.size(); i++) {
-            final HandlerMethodReturnValueHandler valueHandler = originalHandlers.get(i);
+        for (final HandlerMethodReturnValueHandler valueHandler : originalHandlers) {
             if (RequestResponseBodyMethodProcessor.class.isAssignableFrom(valueHandler.getClass())) {
                 requestResponseBodyMethodProcessor = (RequestResponseBodyMethodProcessor) valueHandler;
                 break;
@@ -31,15 +31,15 @@ public class ResponseConfiguration implements InitializingBean {
         }
         ResponseObjectHandler aronResponseValueHandler = new ResponseObjectHandler(requestResponseBodyMethodProcessor);
 
-        final int deferredPos = obtainValueHandlerPosition(originalHandlers, DeferredResultMethodReturnValueHandler.class);
+        final int deferredPos = obtainValueHandlerPosition(originalHandlers);
         originalHandlers.add(deferredPos + 1, aronResponseValueHandler);
         requestMappingHandlerAdapter.setReturnValueHandlers(originalHandlers);
     }
 
-    private int obtainValueHandlerPosition(final List<HandlerMethodReturnValueHandler> originalHandlers, Class<?> handlerClass) {
+    private int obtainValueHandlerPosition(final List<HandlerMethodReturnValueHandler> originalHandlers) {
         for (int i = 0; i < originalHandlers.size(); i++) {
             final HandlerMethodReturnValueHandler valueHandler = originalHandlers.get(i);
-            if (handlerClass.isAssignableFrom(valueHandler.getClass())) {
+            if (DeferredResultMethodReturnValueHandler.class.isAssignableFrom(valueHandler.getClass())) {
                 return i;
             }
         }
