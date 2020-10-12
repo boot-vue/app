@@ -4,6 +4,7 @@ import com.bootvue.common.result.Result;
 import com.bootvue.common.result.ResultUtil;
 import org.springframework.core.MethodParameter;
 import org.springframework.core.annotation.AnnotatedElementUtils;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodReturnValueHandler;
@@ -28,6 +29,8 @@ public class ResponseObjectHandler implements HandlerMethodReturnValueHandler {
         Result result = null;
         if (!Result.class.isAssignableFrom(returnType.getParameterType())) {
             result = ResultUtil.success(returnValue);
+        } else if (ObjectUtils.isEmpty(returnValue)) {
+            result = ResultUtil.success();
         } else {
             result = (Result) returnValue;
         }
