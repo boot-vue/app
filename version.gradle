@@ -2,7 +2,7 @@ ext {
     versions = [
             fastjson         : '1.2.74',
             commonsText      : '1.9',
-            mysql            : '8.0.21',
+            mysql            : '5.1.49',
             xxlJob           : '2.2.0',
             redisson         : '3.13.5',
             mybatis          : '2.1.3',
