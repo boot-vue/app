@@ -18,7 +18,11 @@ ext {
             Excel4J          : '3.0.0',
             javaJwt          : '3.11.0',
             jjwt             : '0.9.1',
-            flyway           : '6.5.7'
+            flyway           : '6.5.7',
+            jaxbApi          : '2.3.1',
+            jaxbImpl         : '2.3.3',
+            jaxbCore         : '2.3.0.1',
+            activation       : '1.1.1',
     ]
 
     libs = [
@@ -40,6 +44,10 @@ ext {
             'Excel4J'           : "com.github.crab2died:Excel4J:${versions.Excel4J}",
             'java-jwt'          : "com.auth0:java-jwt:${versions.javaJwt}",
             'jjwt'              : "io.jsonwebtoken:jjwt:${versions.jjwt}",
-            'flyway'            : "org.flywaydb:flyway-core:${versions.flyway}"
+            'flyway'            : "org.flywaydb:flyway-core:${versions.flyway}",
+            'jaxbApi'           : "javax.xml.bind:jaxb-api:${versions.jaxbApi}",
+            'jaxbImpl'          : "com.sun.xml.bind:jaxb-impl:${versions.jaxbImpl}",
+            'jaxbCore'          : "com.sun.xml.bind:jaxb-core:${versions.jaxbCore}",
+            'activation'        : "javax.activation:activation:${versions.activation}"
     ]
 }

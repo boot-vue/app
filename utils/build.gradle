@@ -9,4 +9,8 @@ dependencies {
     api libs['Excel4J']
     api libs['java-jwt']
     api libs['jjwt']
+    api libs['jaxbApi']
+    api libs['jaxbImpl']
+    api libs['jaxbCore']
+    api libs['activation']
 }
