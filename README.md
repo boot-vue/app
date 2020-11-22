@@ -49,3 +49,5 @@ openssl pkcs8 -topk8 -inform PEM -in private.pem -outform PEM -nocrypt > private
 ## redisson
 [文档](https://github.com/redisson/redisson/wiki/%E7%9B%AE%E5%BD%95)
 
+## todo
+- [ ] 认证流程修改
