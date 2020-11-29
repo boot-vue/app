@@ -14,7 +14,6 @@ import com.bootvue.auth.provider.AppAuthenticationProvider;
 import com.bootvue.auth.provider.JwtAuthenticationProvider;
 import com.bootvue.auth.provider.SmsAuthenticationProvider;
 import com.bootvue.common.config.AppConfig;
-import com.bootvue.common.dao.UserDao;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;

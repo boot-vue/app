@@ -19,8 +19,8 @@ openssl pkcs8 -topk8 -inform PEM -in private.pem -outform PEM -nocrypt > private
 ## 说明
 ```bash
 1. redis :
-    refresh_token:user_+id --> set(refresh_token) 30d
-    access_token:user_+id ---> set(appToken) 7200s
+    refresh_token:user_+id --> set(refresh_token) 7d
+    access_token:user_+id ---> set(access_token) 7200s
     code:sms_ + phone --> code
     captcha:line_ + code --> code
 2. accessToken: 7200s , refreshToken: 30d 多端共用
@@ -31,6 +31,12 @@ openssl pkcs8 -topk8 -inform PEM -in private.pem -outform PEM -nocrypt > private
 6. /logout 退出登录
 7. /auth/sms 发送短信验证码
 8. swagger-ui/index.html api文档
+9. redisson-cache 
+app:
+  cache:
+    - cache-name: xxx  # 实际存储为cache:xxx
+      ttl: 1800000      #  毫秒
+      max-idle-time: 1200000  #毫秒
 ```
 
 ## 参考

@@ -1,0 +1,10 @@
+${AnsiColor.BRIGHT_CYAN}      _                       ${AnsiColor.BLUE}    ______  __                         __
+${AnsiColor.BRIGHT_CYAN}     / \                      ${AnsiColor.BLUE}  .' ___  |[  |                       |  ]
+${AnsiColor.BRIGHT_CYAN}    / _ \    _ .--.   _ .--.  ${AnsiColor.BLUE} / .'   \_| | |  .--.   __   _    .--.| |
+${AnsiColor.BRIGHT_CYAN}   / ___ \  [ '/'`\ \[ '/'`\ \${AnsiColor.BLUE} | |        | |/ .'`\ \[  | | | / /'`\' |
+${AnsiColor.BRIGHT_CYAN} _/ /   \ \_ | \__/ | | \__/ |${AnsiColor.BLUE} \ `.___.'\ | || \__. | | \_/ |,| \__/  |
+${AnsiColor.BRIGHT_CYAN}|____| |____|| ;.__/  | ;.__/ ${AnsiColor.BLUE}  `.____ .'[___]'.__.'  '.__.'_/ '.__.;__]
+${AnsiColor.BRIGHT_CYAN}            [__|     [__|     ${AnsiColor.BLUE}
+
+
+${AnsiColor.BLUE}:: AppCloud :: ${spring.application.name}::${AnsiColor.BLUE} :: Running SpringBoot ${spring-boot.version} :: ${AnsiColor.BRIGHT_BLACK}

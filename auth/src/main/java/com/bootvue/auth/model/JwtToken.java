@@ -13,10 +13,12 @@ public class JwtToken extends AbstractAuthenticationToken {
 
     private String username;   // 用户名
     private Long userId;
+    private String tenantCode;
 
     public JwtToken(Claims params) {
         super(null);
         this.username = String.valueOf(params.get("username"));
+        this.tenantCode = String.valueOf(params.get("tenant_code"));
         this.userId = Long.valueOf(String.valueOf(params.get("user_id")));
         setAuthenticated(false);
     }
@@ -25,6 +27,7 @@ public class JwtToken extends AbstractAuthenticationToken {
         super(authorities);
         this.username = username;
         this.userId = userId;
+        this.tenantCode = tenantCode;
         super.setAuthenticated(true); // must use super, as we override
     }
 
@@ -53,5 +56,6 @@ public class JwtToken extends AbstractAuthenticationToken {
         super.eraseCredentials();
         userId = null;
         username = null;
+        tenantCode = null;
     }
 }

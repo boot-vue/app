@@ -35,24 +35,10 @@ public class AppSmsAuthenticationFilter extends AbstractAuthenticationProcessing
         } else {
             String phone = this.obtainPhone(request);
             String code = this.obtainCode(request);
-            String captcha = this.obtainCaptcha(request);
 
             if (StringUtils.isEmpty(phone) || StringUtils.isEmpty(code)) {
                 throw new UsernameNotFoundException("手机号 验证码不能为空");
             }
-
-            if (StringUtils.isEmpty(captcha)) {
-                throw new CaptchaException("验证码不能为空");
-            }
-
-            String captchaKey = "captcha:line_" + captcha.trim();
-
-            String captchaCode = stringRedisTemplate.opsForValue().get(captchaKey);
-            if (StringUtils.isEmpty(captchaCode) || !captchaCode.equalsIgnoreCase(captcha)) {
-                throw new CaptchaException("图形验证码错误");
-            }
-
-            stringRedisTemplate.delete(captchaKey);
 
             String smsCodeKey = "code:sms_" + phone.trim();
 
@@ -67,10 +53,6 @@ public class AppSmsAuthenticationFilter extends AbstractAuthenticationProcessing
             this.setDetails(request, authRequest);
             return this.getAuthenticationManager().authenticate(authRequest);
         }
-    }
-
-    private String obtainCaptcha(HttpServletRequest request) {
-        return request.getParameter("captcha");
     }
 
     protected String obtainPhone(HttpServletRequest request) {

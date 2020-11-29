@@ -1,7 +1,8 @@
 package com.bootvue.auth.authc;
 
-import com.bootvue.common.dao.UserDao;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.bootvue.common.entity.User;
+import com.bootvue.common.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -17,16 +18,22 @@ import org.springframework.util.ObjectUtils;
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class AppUserDetailService implements UserDetailsService {
-    private final UserDao userDao;
+    private final UserMapper userMapper;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String usernameAndTenantCode) throws UsernameNotFoundException {
+        String[] strings = usernameAndTenantCode.split(" ");
+        String username = strings[0];
+        String tenantCode = strings[1];
 
-        User user = userDao.findByUsername(username);
+        User user = userMapper.selectOne(new QueryWrapper<User>().lambda()
+                .eq(User::getUsername, username).eq(User::getTenantCode, tenantCode)
+        );
+
         if (ObjectUtils.isEmpty(user)) {
-            throw new UsernameNotFoundException("用户不存在");
+            throw new UsernameNotFoundException("参数错误");
         }
         return new AppUserDetails(user.getId(), username, user.getPassword(),
-                user.getStatus() == 0, AuthorityUtils.commaSeparatedStringToAuthorityList(user.getRoles()));
+                user.getTenantCode(), user.getAvatar(), user.getPhone(), user.getStatus(), AuthorityUtils.commaSeparatedStringToAuthorityList(user.getRoles()));
     }
 }

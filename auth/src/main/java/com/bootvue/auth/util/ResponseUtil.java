@@ -1,6 +1,6 @@
 package com.bootvue.auth.util;
 
-import com.bootvue.common.result.Result;
+import com.bootvue.common.result.R;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import io.netty.util.CharsetUtil;
@@ -20,7 +20,7 @@ public class ResponseUtil {
         MAPPER.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
     }
 
-    public static void write(HttpServletResponse response, Result data) throws IOException {
+    public static void write(HttpServletResponse response, R data) throws IOException {
         response.setContentType(ContentType.APPLICATION_JSON.getMimeType());
         response.setCharacterEncoding(CharsetUtil.UTF_8.toString());
         PrintWriter writer = response.getWriter();

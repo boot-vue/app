@@ -18,52 +18,22 @@ import lombok.ToString;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName(value = "app.`user`")
-public class User {
+@TableName(value = "app.tenant")
+public class Tenant {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
     /**
      * 租户编号
      */
-    @TableField(value = "tenant_code")
-    private String tenantCode;
+    @TableField(value = "code")
+    private String code;
 
     /**
-     * 用户名
+     * 租户名称
      */
-    @TableField(value = "username")
-    private String username;
-
-    /**
-     * 手机号, 不同租户下手机号可以重复
-     */
-    @TableField(value = "phone")
-    private String phone;
-
-    /**
-     * 密码
-     */
-    @TableField(value = "`password`")
-    private String password;
-
-    /**
-     * 头像
-     */
-    @TableField(value = "avatar")
-    private String avatar;
-
-    /**
-     * 角色 逗号分隔
-     */
-    @TableField(value = "roles")
-    private String roles;
-
-    /**
-     * 0:正常 1:禁用
-     */
-    @TableField(value = "`status`")
-    private Boolean status;
+    @TableField(value = "`name`")
+    private String name;
 
     @TableField(value = "create_time")
     private LocalDateTime createTime;
@@ -71,6 +41,9 @@ public class User {
     @TableField(value = "update_time")
     private LocalDateTime updateTime;
 
+    /**
+     * 删除时需要同步删除租户下的用户
+     */
     @TableField(value = "delete_time")
     private LocalDateTime deleteTime;
 }

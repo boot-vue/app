@@ -2,8 +2,6 @@ package com.bootvue.auth.provider;
 
 import com.bootvue.auth.authc.AppUserDetails;
 import com.bootvue.auth.model.AppSmsToken;
-import com.bootvue.common.dao.UserDao;
-import com.bootvue.common.entity.User;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.Authentication;

@@ -8,6 +8,7 @@ spring:
       max-lifetime: 150000
       pool-name: app-db-pool
       validation-timeout: 1000
+      minimum-idle: 20
   profiles:
     active: dev
   jackson:
@@ -20,11 +21,19 @@ spring:
     locations:
       - classpath:db/migration
     clean-disabled: true
+  jpa:
+    show-sql: false
 server:
   port: 8080
 logging:
-  level:
-    root: info
+  config: classpath:logback.xml
+mybatis-plus:
+  configuration:
+    cache-enabled: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations:
+    - classpath*:/mybatis/**/*.xml
 app:
+  swagger: false
   allow-list:
     - /auth/**

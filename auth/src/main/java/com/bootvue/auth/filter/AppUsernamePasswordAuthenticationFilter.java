@@ -34,35 +34,31 @@ public class AppUsernamePasswordAuthenticationFilter extends UsernamePasswordAut
         } else {
             String username = this.obtainUsername(request);
             String password = this.obtainPassword(request);
-            String code = this.obtainCaptcha(request);
+            String code = request.getParameter("code");
+            String key = request.getParameter("key");
+            String tenantCode = request.getParameter("tenant_code");
 
-            if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
+            if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password) || StringUtils.isEmpty(tenantCode)) {
                 // 用户名 密码为空
-                throw new UsernameNotFoundException("用户名密码不能为空");
+                throw new UsernameNotFoundException("参数错误");
             }
 
-            if (StringUtils.isEmpty(code)) {
+            if (StringUtils.isEmpty(code) || StringUtils.isEmpty(key)) {
                 throw new CaptchaException("验证码不能为空");
             }
 
-            String key = "captcha:line_" + code.trim();
-
-            String captcha = stringRedisTemplate.opsForValue().get(key);
+            String captcha = stringRedisTemplate.opsForValue().get("captcha:line_" + key);
             if (StringUtils.isEmpty(captcha) || !captcha.equalsIgnoreCase(code)) {
                 throw new CaptchaException("图形验证码错误");
             }
 
             stringRedisTemplate.delete(key);
 
-            AppUserDetails userDetails = new AppUserDetails(null, username.trim(), password.trim(), true, AuthorityUtils.NO_AUTHORITIES);
+            AppUserDetails userDetails = new AppUserDetails(null, username.trim(), password.trim(), tenantCode.trim(), "", "", true, AuthorityUtils.NO_AUTHORITIES);
             AppUserToken authRequest = new AppUserToken(userDetails);
             authRequest.setDetails(userDetails);
             return this.getAuthenticationManager().authenticate(authRequest);
         }
-    }
-
-    private String obtainCaptcha(HttpServletRequest request) {
-        return request.getParameter("captcha");
     }
 
     @Override

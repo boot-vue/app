@@ -2,7 +2,7 @@ package com.bootvue.auth.handler;
 
 import com.bootvue.auth.model.AppToken;
 import com.bootvue.auth.util.ResponseUtil;
-import com.bootvue.common.dao.UserDao;
+import com.bootvue.common.mapper.UserMapper;
 import com.bootvue.common.result.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -18,13 +18,13 @@ import java.io.IOException;
 @Component
 public class LogOutSuccessHandler implements LogoutSuccessHandler {
 
-    private final UserDao userDao;
+    private final UserMapper userMapper;
     private final RedisTemplate<String, AppToken> redisTemplate;
 
     @Autowired
-    public LogOutSuccessHandler(RedisTemplate<String, AppToken> redisTemplate, UserDao userDao) {
+    public LogOutSuccessHandler(RedisTemplate<String, AppToken> redisTemplate, UserMapper userMapper) {
         this.redisTemplate = redisTemplate;
-        this.userDao = userDao;
+        this.userMapper = userMapper;
     }
 
     @Override

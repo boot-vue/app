@@ -8,14 +8,14 @@ import lombok.Getter;
  */
 @AllArgsConstructor
 @Getter
-public enum ResultCode {
+public enum RCode {
     SUCCESS(200, "success"),
-    PARAM_ERROR(400, "非法参数"),
-    ACCESS_DENY(403, "没有权限"),
+    PARAM_ERROR(400, "Bad Request"),
+    UNAUTHORIZED_ERROR(401, "Unauthorized"),
+    ACCESS_DENY(403, "Forbidden"),
     DEFAULT(600, "系统异常"),
-    LOGIN_ERROR(601, "用户名或密码错误"),
-    TOKEN_ERROR(602, "凭证无效"),
-    REFRESH_TOKEN_ERROR(603, "refresh token无效");
+    ;
+
     private final Integer code;
     private final String msg;
 }

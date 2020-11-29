@@ -1,10 +1,30 @@
-/*
-  Source Server         : mysql8
-  Author                : bootvue@gmail.com
-*/
-
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for tenant
+-- ----------------------------
+DROP TABLE IF EXISTS `tenant`;
+CREATE TABLE `tenant`
+(
+    `id`          bigint                                                       NOT NULL AUTO_INCREMENT,
+    `code`        varchar(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci  NOT NULL COMMENT '租户编号',
+    `name`        varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '租户名称',
+    `create_time` datetime(0)                                                  NOT NULL,
+    `update_time` datetime(0)                                                  NULL DEFAULT NULL,
+    `delete_time` datetime(0)                                                  NULL DEFAULT NULL COMMENT '删除时需要同步删除租户下的用户',
+    PRIMARY KEY (`id`) USING BTREE,
+    UNIQUE INDEX `code_index` (`code`) USING BTREE
+) ENGINE = InnoDB
+  CHARACTER SET = utf8mb4
+  COLLATE = utf8mb4_0900_ai_ci
+  ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of tenant
+-- ----------------------------
+INSERT INTO `tenant`
+VALUES (1, '000000', '平台', now(), NULL, NULL);
 
 -- ----------------------------
 -- Table structure for user
@@ -12,18 +32,20 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user`
 (
-    `id`          bigint(20)                                                    NOT NULL AUTO_INCREMENT,
+    `id`          bigint                                                        NOT NULL AUTO_INCREMENT,
+    `tenant_code` varchar(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci   NOT NULL COMMENT '租户编号',
     `username`    varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci  NOT NULL COMMENT '用户名',
-    `phone`       varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci  NULL     DEFAULT NULL COMMENT '手机号',
+    `phone`       varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci  NOT NULL DEFAULT '' COMMENT '手机号, 不同租户下手机号可以重复',
     `password`    varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci  NOT NULL COMMENT '密码',
-    `roles`       varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL     DEFAULT NULL COMMENT '角色权限',
+    `avatar`      varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci  NOT NULL DEFAULT '' COMMENT '头像',
+    `roles`       varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '角色 逗号分隔',
     `status`      tinyint(1)                                                    NOT NULL DEFAULT 0 COMMENT '0:正常 1:禁用',
     `create_time` datetime(0)                                                   NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
     `update_time` datetime(0)                                                   NULL     DEFAULT NULL,
     `delete_time` datetime(0)                                                   NULL     DEFAULT NULL,
     PRIMARY KEY (`id`) USING BTREE,
     UNIQUE INDEX `username_index` (`username`) USING BTREE,
-    UNIQUE INDEX `phone_index` (`phone`) USING BTREE
+    UNIQUE INDEX `phone_index` (`phone`, `tenant_code`) USING BTREE
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 4
   CHARACTER SET = utf8mb4
@@ -34,10 +56,9 @@ CREATE TABLE `user`
 -- Records of user
 -- ----------------------------
 INSERT INTO `user`
-VALUES (1, 'test1', '12345678900', '827ccb0eea8a706c4c34a16891f84e7b', NULL, 0, '2020-06-17 17:10:24', NULL, NULL);
+VALUES (1, '000000', 'test1', '17705920000', md5('123456'), '', 'ROLE_admin', 0, now(), NULL, NULL);
+
 INSERT INTO `user`
-VALUES (2, 'test2', '12345678901', '827ccb0eea8a706c4c34a16891f84e7b', 'ROLE_admin', 0, '2020-06-17 17:10:45', NULL, NULL);
-INSERT INTO `user`
-VALUES (3, 'test3', '12345678902', '827ccb0eea8a706c4c34a16891f84e7b', 'ROLE_user', 0, '2020-06-17 17:11:06', NULL, NULL);
+VALUES (2, '000000', 'test2', '17705920001', md5('123456'), '', 'ROLE_user', 0, now(), NULL, NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;

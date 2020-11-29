@@ -19,7 +19,7 @@ public class AppToken implements Serializable {
     private Long userId;
     @ApiModelProperty("access token, 有效时间7200s")
     private String accessToken;
-    @ApiModelProperty("refresh token, 有效时间30d")
+    @ApiModelProperty("refresh token, 有效时间7d")
     private String refreshToken;
 
     @ApiModelProperty("username")
@@ -27,4 +27,8 @@ public class AppToken implements Serializable {
 
     @ApiModelProperty("权限")
     private String authorities;
+
+    private String phone;
+    private String avatar;
+    private String tenantCode;
 }

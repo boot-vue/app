@@ -4,8 +4,9 @@ import com.bootvue.auth.model.AppToken;
 import com.bootvue.auth.model.JwtToken;
 import com.bootvue.auth.util.ResponseUtil;
 import com.bootvue.common.config.AppConfig;
-import com.bootvue.common.result.ResultCode;
-import com.bootvue.common.result.ResultUtil;
+import com.bootvue.common.result.AppException;
+import com.bootvue.common.result.R;
+import com.bootvue.common.result.RCode;
 import com.bootvue.utils.auth.JwtUtil;
 import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
@@ -59,13 +60,12 @@ public class AppAuthenticationFilter extends BasicAuthenticationFilter {
         // 校验token
         String token = request.getHeader("token");
         if (StringUtils.isEmpty(token) || !JwtUtil.isVerify(token)) {
-            ResponseUtil.write(response, ResultUtil.error(ResultCode.TOKEN_ERROR));
+            ResponseUtil.write(response, R.error(new AppException(RCode.UNAUTHORIZED_ERROR)));
             return;
         }
 
         // *************token验证通过
         Claims params = JwtUtil.decode(token);
-        log.debug("用户信息: {}", params);
 
         Long userId = Long.valueOf(String.valueOf(params.get("user_id")));
 
